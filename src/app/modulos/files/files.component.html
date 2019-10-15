@@ -1,0 +1,235 @@
+ <!-- 
+ 
+ <div  class="container">
+    <div [hidden]="pantalla==1" class="card border-secondary mb-3">
+                <div class="card-header">Header</div>
+                <button (click)="pantalla=1" type="button" class="btn btn-primary disabled"> Atras </button>
+                <div class="card-body">
+                        <mat-tab-group>
+                                <mat-tab label="First">
+                                    
+                                        <div class="row mt-3">
+
+                                                <div class="col-md-3">
+                                              
+                                                  <h3>Add Photos</h3>
+                                              
+                                         
+                                                  <div ng2FileDrop
+                                                       [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                                                       (fileOver)="fileOverBase($event)"
+                                                       [uploader]="uploader"
+                                                       class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+                                                      <i class="fa fa-upload fa-3x"></i>
+                                                    Drop Photos Here
+                                                  </div>
+                                              
+                                                  Multiple
+                                                  <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+                                              
+                                                  Single
+                                                  <input type="file" ng2FileSelect [uploader]="uploader" />
+                                                </div>
+                                              
+                                                <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+                                              
+                                                  <h3>Upload queue</h3>
+                                                  <p>Queue length: {{ uploader?.queue?.length }}</p>
+                                              
+                                                  <table class="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th width="50%">Name</th>
+                                                        <th>Size</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr *ngFor="let item of uploader.queue">
+                                                        <td><strong>{{ item?.file?.name }}</strong></td>
+                                                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>          
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                              
+                                                  <div>
+                                                    <div>
+                                                      Queue progress:
+                                                      <div class="progress mb-4"> 
+                                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                                      </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-success btn-s"
+                                                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                        
+                                        
+                                                      <span class="fa fa-upload"></span> Upload
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-s"
+                                                            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                                      <span class="fa fa-ban"></span> Cancel
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-s"
+                                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                                      <span class="fa fa-trash"></span> Remove
+                                                    </button>
+                                                  </div>
+                                              
+                                                </div>
+                                            </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                </mat-tab>
+                                <mat-tab label="Second"> Content 2 </mat-tab>
+                                <mat-tab label="Third"> Content 3 </mat-tab>
+                        </mat-tab-group>
+                </div>
+    </div>
+    
+    <div [hidden]="pantalla==2" class="row" >
+            <div class="col-sm-12">   
+        <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+        
+            <ng-container matColumnDef="Nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+        
+            
+            <ng-container matColumnDef="Codcli">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Codcli </th>
+                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+            </ng-container>
+        
+         
+            <ng-container matColumnDef="DOI">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> DOI </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Perfil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Perfil </th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                    
+            </ng-container>
+        
+ 
+            <ng-container matColumnDef="Info">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Info </th>
+                <td mat-cell *matCellDef="let row" [style.color]="row.color"> 
+                        <button (click)="getPersona()" type="button" class="btn btn-primary disabled"> + </button>
+                </td>
+                
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+            </table>
+        
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>
+</div>  
+
+-->
+<span  [suiTransition]="transitionController">
+<h2 class="ui header">
+    <i class="settings icon"></i>
+    <div class="content">
+      Account Settings
+      <div class="sub header">Manage your preferences</div>
+    </div>
+  </h2>
+
+<table class="ui  selectable  celled padded table">
+    <thead>
+      <tr><th class="single line">Evidence Rating</th>
+      <th>Effect</th>
+      <th>Efficacy</th>
+      <th>Consensus</th>
+      <th>Comments</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>
+          <h2 class="ui center aligned header">A</h2>
+        </td>
+        <td class="single line">
+          Power Output
+        </td>
+        <td>
+          <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
+        </td>
+        <td class="right aligned">
+          80% <br>
+          <a href="#">18 studies</a>
+        </td>
+        <td>Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.</td>
+      </tr>
+      <tr>
+        <td>
+          <h2 class="ui center aligned header">A</h2>
+        </td>
+        <td class="single line">
+          Weight
+        </td>
+        <td>
+          <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
+        </td>
+        <td class="right aligned">
+          100% <br>
+          <a href="#">65 studies</a>
+        </td>
+        <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><th colspan="5">
+        <div class="ui right floated pagination menu">
+          <a class="icon item">
+            <i class="left chevron icon"></i>
+          </a>
+          <a class="item">1</a>
+          <a class="item">2</a>
+          <a class="item">3</a>
+          <a class="item">4</a>
+          <a class="icon item">
+            <i class="right chevron icon"></i>
+          </a>
+        </div>
+      </th>
+    </tr></tfoot>
+  </table>
+</span>
+
+<div class="ui grey three item inverted menu">
+    <a class="item active">
+      Home
+    </a>
+    <a class="item">
+      Messages
+    </a>
+    <a class="item">
+      Friends
+    </a>
+  </div>
+<!--
+<input #file type="file" multiple (change)="upload(file.files)" />
+<span *ngIf="uploadProgress > 0 && uploadProgress < 100">
+    {{uploadProgress}}%
+</span>
+-->
+

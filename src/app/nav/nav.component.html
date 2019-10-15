@@ -1,0 +1,124 @@
+<!--
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand"  [routerLink]="['/home']">UC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        
+        <ul *ngIf="loggedIn()" class="nav nav-pills">
+            <li class="nav-item" routerLinkActive="active">
+              <a [routerLink]="['/home']" class="nav-link active" >Home</a>
+            </li>
+            <li class="nav-item dropdown" routerLinkActive="active">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Modulos</a>
+              <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                <a class="dropdown-item" [routerLink]="['/files']">Files        </a>
+                <a class="dropdown-item" [routerLink]="['/members/', 1]" [queryParams]="{tab: 3}">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          <button  class="btn btn-secondary my-2 my-sm-0" (click) = "logout()" >Logout</button>
+        </ul>
+
+
+      <form  *ngIf="!loggedIn()" class="form-inline my-2 my-lg-0" #loginForm="ngForm" (ngSumit)="login()">
+        <input class="form-control mr-sm-2" type="text" placeholder="Username"  required name="username" [(ngModel)]="model.username">
+        <input class="form-control mr-sm-2" type="password" placeholder="Password" required name="password" [(ngModel)]="model.password">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click) = "login(model)">Login</button>
+      </form>
+      
+    </div>
+  </nav>
+  
+-->
+  <div class="ui  top attached demo menu " >
+      <a class="item" (click)="sidebar.toggle()">
+          <i class="sidebar icon"></i> Menu
+      </a>
+      <div class="ui menu" >
+          <a class="item"  [routerLink]="['/home']">Home</a>
+          <div class="ui pointing dropdown link item" suiDropdown>
+              <span class="text">Shopping</span>
+              <i class="dropdown icon"></i>
+              <div class="menu" suiDropdownMenu>
+                  <div class="header">Categories</div>
+                  <div class="item" suiDropdown>
+                      <i class="dropdown icon"></i>
+                      <span class="text">Clothing</span>
+                      <div class="menu" suiDropdownMenu>
+                          <div class="header">Mens</div>
+                          <div class="item">Shirts</div>
+                          <div class="item">Pants</div>
+                          <div class="item">Jeans</div>
+                          <div class="item">Shoes</div>
+                          <div class="divider"></div>
+                          <div class="header">Womens</div>
+                          <div class="item">Dresses</div>
+                          <div class="item">Shoes</div>
+                          <div class="item">Bags</div>
+                      </div>
+                  </div>
+                  <div class="item">Home Goods</div>
+                  <div class="item">Bedroom</div>
+                  <div class="divider"></div>
+                  <div class="header">Order</div>
+                  <div class="item">Status</div>
+                  <div class="item">Cancellations</div>
+              </div>
+          </div>
+          <a class="item" [routerLink]="['/files']">Forums</a>
+          <a class="item">Contact Us</a>
+          <button  class="btn btn-secondary my-2 my-sm-0" (click) = "logout()" >Logout</button>
+          
+          <form  *ngIf="!loggedIn()" class="form-inline my-2 my-lg-0" #loginForm="ngForm" (ngSumit)="login()">
+              <input class="form-control mr-sm-2" type="text" placeholder="Username"  required name="username" [(ngModel)]="model.username">
+              <input class="form-control mr-sm-2" type="password" placeholder="Password" required name="password" [(ngModel)]="model.password">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click) = "login(model)">Login</button>
+          </form>
+      </div>
+  </div>
+  <!--[hidden]="!loggedIn()"-->
+<div [hidden]="!loggedIn()">
+  <sui-sidebar-container  class="ui bottom attached segment">
+      <sui-sidebar class="inverted vertical" style="background:#304156; height: 100%;" #sidebar [isVisible]="true">
+          <a class="item"><i class="home icon"></i>Home</a>
+          <a class="item">
+              <i class="block layout icon"></i>
+              Topics
+          </a>
+      </sui-sidebar>
+      <sui-sidebar-sibling [isDimmedWhenVisible]="false">
+          <div class="ui basic segment">
+              <router-outlet></router-outlet>        
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <button class="ui button" (click)="sidebar.open()">Open Sidebar</button>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+              <h3 class="ui header">Content</h3>
+              <p>Example content beside the sidebar</p>
+          </div>
+      </sui-sidebar-sibling>
+  </sui-sidebar-container>
+
+ </div>
