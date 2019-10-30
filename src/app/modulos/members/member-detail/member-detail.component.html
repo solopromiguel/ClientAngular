@@ -1,3 +1,77 @@
 <p>member-detail works!</p>
 
-<img  src="{{ '../../../assets/user.png'}}" >
+<div class="row">
+
+    <div class="col">
+            <img  src="{{ photoUrl || '../../../assets/user.png'}} " >
+            <input type="file" ng2FileSelect [uploader]="uploader" />
+
+            <button type="button" class="btn btn-success btn-s"
+            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="fa fa-upload"></span> Upload
+            </button>
+    </div>
+    <div class="col">
+
+            <mat-tab-group>
+                    <mat-tab label="Informacion"> 
+                        
+                            <div class="fields-container">
+                                    <mat-form-field>
+                                      <input matInput placeholder="First Name">
+                                    </mat-form-field>
+                              
+                            </div>
+                            <div class="fields-container">
+                                        <mat-form-field class="example-full-width">
+                                          <input matInput placeholder="Display Name">
+                                        </mat-form-field>
+                                  
+                             </div>
+                            <div class="fields-container">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Display Name">
+                                    </mat-form-field>
+                              
+                             </div>
+
+                           <div class="fields-container">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Job">
+                                </mat-form-field>
+                          
+                            </div>
+
+                             <button mat-raised-button color="primary">Guardar</button>
+                                      
+
+                    </mat-tab>
+                    <mat-tab label="Credenciales"> 
+                        
+                            <div class="fields-container">
+                                    <mat-form-field>
+                                            <input matInput [(ngModel)]="modelPassword.PasswordOld" placeholder="Enter your Old Password " [type]="'password'">
+                                    </mat-form-field>
+                              
+                            </div>
+                            <div class="fields-container">
+                                    <mat-form-field>
+                                            <input matInput [(ngModel)]="modelPassword.Password" placeholder="Enter your New password" [type]="'password'">
+                                    </mat-form-field>
+                              
+                            </div>
+                            <button (click)="cambiarPassword()" mat-raised-button color="primary">Cambiar</button>
+                    </mat-tab>
+                    <mat-tab label="Others"> Content 3 </mat-tab>
+            </mat-tab-group>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+  

@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 
 // Angular Material
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -19,6 +21,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
+
+import {MatSelectModule} from '@angular/material/select';
 
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -63,13 +67,16 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       MatTableModule,
       MatInputModule,
+      MatFormFieldModule,
       MatToolbarModule,
       MatButtonModule,
       ReactiveFormsModule,
       MatPaginatorModule,
       MatCardModule,
+      MatSelectModule,
       MatIconModule,
       MatMenuModule,
+      MatGridListModule,
       FormsModule,
       MatTabsModule,
       RouterModule.forRoot(appRoutes),
@@ -78,7 +85,7 @@ export function tokenGetter() {
       JwtModule.forRoot({
          config: {
            tokenGetter,
-           whitelistedDomains: ['localhost', 'localhost:4200'],
+           whitelistedDomains: ['localhost', 'localhost:44317'],
            blacklistedRoutes: ['localhost:4200/api/auth', 'localhost/api/auth']
          }
        })

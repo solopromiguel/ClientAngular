@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   angForm: FormGroup;
+  photoUrl: string;
   values: any;
   model: any = {};
   isExpanded = false;
@@ -23,6 +24,9 @@ export class NavComponent implements OnInit {
               private test: TestService, private router: Router) {}
 
   ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+
+  console.log('AQUI FOTO');
   }
   collapse() {
     this.isExpanded = false;

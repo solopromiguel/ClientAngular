@@ -39,7 +39,6 @@
       
     </div>
   </nav>
-  
 -->
   <div class="ui  top attached demo menu " >
       <a class="item" (click)="sidebar.toggle()">
@@ -47,37 +46,14 @@
       </a>
       <div class="ui menu" >
           <a class="item"  [routerLink]="['/home']">Home</a>
-          <div class="ui pointing dropdown link item" suiDropdown>
-              <span class="text">Shopping</span>
-              <i class="dropdown icon"></i>
-              <div class="menu" suiDropdownMenu>
-                  <div class="header">Categories</div>
-                  <div class="item" suiDropdown>
-                      <i class="dropdown icon"></i>
-                      <span class="text">Clothing</span>
-                      <div class="menu" suiDropdownMenu>
-                          <div class="header">Mens</div>
-                          <div class="item">Shirts</div>
-                          <div class="item">Pants</div>
-                          <div class="item">Jeans</div>
-                          <div class="item">Shoes</div>
-                          <div class="divider"></div>
-                          <div class="header">Womens</div>
-                          <div class="item">Dresses</div>
-                          <div class="item">Shoes</div>
-                          <div class="item">Bags</div>
-                      </div>
-                  </div>
-                  <div class="item">Home Goods</div>
-                  <div class="item">Bedroom</div>
-                  <div class="divider"></div>
-                  <div class="header">Order</div>
-                  <div class="item">Status</div>
-                  <div class="item">Cancellations</div>
-              </div>
-          </div>
           <a class="item" [routerLink]="['/files']">Forums</a>
-          <a class="item">Contact Us</a>
+          <a class="item">
+            <span class="mr-1">
+              <img src="{{ photoUrl || '../../../assets/user.png'}}" alt="">
+            </span>Contact Us</a>
+          
+          <a class="item"><mat-icon>notifications</mat-icon>Alert</a>
+          
           <button  class="btn btn-secondary my-2 my-sm-0" (click) = "logout()" >Logout</button>
           
           <form  *ngIf="!loggedIn()" class="form-inline my-2 my-lg-0" #loginForm="ngForm" (ngSumit)="login()">
@@ -85,6 +61,25 @@
               <input class="form-control mr-sm-2" type="password" placeholder="Password" required name="password" [(ngModel)]="model.password">
               <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click) = "login(model)">Login</button>
           </form>
+          
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+             <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item [routerLink]="['/members/', 1]">
+              <mat-icon  >dialpad</mat-icon>
+              <span>Perfil</span>
+            </button>
+            <button mat-menu-item disabled>
+              <mat-icon>voicemail</mat-icon>
+              <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item  (click) = "logout()">
+              <mat-icon>notifications_off</mat-icon>
+              <span>Cerrar Session</span>
+            </button>
+          </mat-menu>
+          
       </div>
   </div>
   <!--[hidden]="!loggedIn()"-->
@@ -99,7 +94,8 @@
       </sui-sidebar>
       <sui-sidebar-sibling [isDimmedWhenVisible]="false">
           <div class="ui basic segment">
-              <router-outlet></router-outlet>        
+              <router-outlet></router-outlet>    
+              <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>    
               <h3 class="ui header">Content</h3>
               <p>Example content beside the sidebar</p>
               <h3 class="ui header">Content</h3>

@@ -3,11 +3,17 @@ import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { map , catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import {BehaviorSubject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
+
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;
   baseUrl = environment.apiUrl;
   userToken: any ;
   headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('token')});
@@ -15,6 +21,9 @@ export class AuthService {
 
 constructor(public http: HttpClient) { }
 
+  changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+  }
  login(model: any) {
   const headers = new HttpHeaders({'Content-type': 'application/json'});
   const options = { headers};
@@ -26,10 +35,24 @@ constructor(public http: HttpClient) { }
       const responseUser = response;
 
       if (responseUser) {
-        localStorage.setItem('token', responseUser.tokenString);
-        this.getValues1(responseUser.tokenString);
-       // console.log(responseUser.tokenString);
+        localStorage.setItem('token', responseUser.token);
+        this.decodedToken = this.jwtHelper.decodeToken(responseUser.token);
+
+        this.changeMemberPhoto(response.user.url);
+        console.log(response.user.url);
+
+        this.getValues1(responseUser.token);
       }
+  })
+  );
+
+}
+
+cambiarPassword(modePassword: any){
+  return this.http.post(this.baseUrl + 'auth/changePassword/', modePassword)
+  .pipe(
+    map((response: any) => {
+      console.log(response);
   })
   );
 
@@ -37,12 +60,15 @@ constructor(public http: HttpClient) { }
 
  getValues1(token: any) {
 
-  console.log('entroaqui');
-  return this.http.get(this.baseUrl + 'values' ).subscribe(response =>{
+  return this.http.get(this.baseUrl + 'values').subscribe(response =>{
 
     console.log(response);
   })
  }
+   loggedIn2() {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
 
  loggedIn() {
   const token = localStorage.getItem('token');
@@ -67,7 +93,5 @@ constructor(public http: HttpClient) { }
   // return !this.jwtHelper.isTokenExpired(token);
   return !!token;
 }
-
-
 }
 
