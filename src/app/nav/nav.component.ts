@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  alertas: number = 0;
+  polling: any;
   angForm: FormGroup;
   photoUrl: string;
   values: any;
@@ -26,8 +28,18 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
 
-  console.log('AQUI FOTO');
+    console.log('AQUI FOTO');
+
+    this.consultaAlertas();
+    this.pollData();
   }
+
+
+  consultaAlertas() {
+  
+  this.alertas+=1;
+  }
+  
   collapse() {
     this.isExpanded = false;
   }
@@ -59,5 +71,16 @@ export class NavComponent implements OnInit {
     const token = localStorage.getItem('token');
     return !!token;
   }
+
+  ngOnDestroy() {
+    clearInterval(this.polling);
+  }
+
+  pollData () {
+    this.polling = setInterval(() => {
+    this.consultaAlertas();
+
+  }, 40*1000)
+}
 
 }

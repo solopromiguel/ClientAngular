@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 
 // Angular Material
+import {MatBadgeModule} from '@angular/material/badge';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
@@ -66,6 +67,7 @@ export function tokenGetter() {
       HttpClientModule,
       BrowserAnimationsModule,
       MatTableModule,
+      MatBadgeModule,
       MatInputModule,
       MatFormFieldModule,
       MatToolbarModule,

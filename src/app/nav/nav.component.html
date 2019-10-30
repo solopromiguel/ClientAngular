@@ -52,7 +52,10 @@
               <img src="{{ photoUrl || '../../../assets/user.png'}}" alt="">
             </span>Contact Us</a>
           
-          <a class="item"><mat-icon>notifications</mat-icon>Alert</a>
+
+
+          <a class="item"> <mat-icon matBadge="{{alertas}}" matBadgeColor="warn">notifications</mat-icon></a>
+ 
           
           <button  class="btn btn-secondary my-2 my-sm-0" (click) = "logout()" >Logout</button>
           
