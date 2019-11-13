@@ -9,6 +9,12 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+
+  numberAlerta = new BehaviorSubject<number>(1);
+  currentNumberAlerta = this.numberAlerta.asObservable();
+
+
+
   photoUrl = new BehaviorSubject<string>('../../assets/user.png');
   currentPhotoUrl = this.photoUrl.asObservable();
 
@@ -24,9 +30,14 @@ constructor(public http: HttpClient) { }
   changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);
   }
+
+  cambiarNumberAlertas(alertas: number) {
+    this.numberAlerta.next(alertas);
+  }
  login(model: any) {
   const headers = new HttpHeaders({'Content-type': 'application/json'});
   const options = { headers};
+  console.log('Alertas'+ this.numberAlerta.subscribe());
 
   return this.http.post(this.baseUrl + 'auth/login', model)
   .pipe(

@@ -1,235 +1,399 @@
- <!-- 
- 
- <div  class="container">
-    <div [hidden]="pantalla==1" class="card border-secondary mb-3">
-                <div class="card-header">Header</div>
-                <button (click)="pantalla=1" type="button" class="btn btn-primary disabled"> Atras </button>
-                <div class="card-body">
-                        <mat-tab-group>
-                                <mat-tab label="First">
-                                    
-                                        <div class="row mt-3">
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Definicion</ng-template>
 
-                                                <div class="col-md-3">
-                                              
-                                                  <h3>Add Photos</h3>
-                                              
-                                         
-                                                  <div ng2FileDrop
-                                                       [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                                                       (fileOver)="fileOverBase($event)"
-                                                       [uploader]="uploader"
-                                                       class="card bg-faded p-3 text-center mb-3 my-drop-zone">
-                                                      <i class="fa fa-upload fa-3x"></i>
-                                                    Drop Photos Here
-                                                  </div>
-                                              
-                                                  Multiple
-                                                  <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
-                                              
-                                                  Single
-                                                  <input type="file" ng2FileSelect [uploader]="uploader" />
-                                                </div>
-                                              
-                                                <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
-                                              
-                                                  <h3>Upload queue</h3>
-                                                  <p>Queue length: {{ uploader?.queue?.length }}</p>
-                                              
-                                                  <table class="table">
-                                                    <thead>
-                                                      <tr>
-                                                        <th width="50%">Name</th>
-                                                        <th>Size</th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <tr *ngFor="let item of uploader.queue">
-                                                        <td><strong>{{ item?.file?.name }}</strong></td>
-                                                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>          
-                                                      </tr>
-                                                    </tbody>
-                                                  </table>
-                                              
-                                                  <div>
-                                                    <div>
-                                                      Queue progress:
-                                                      <div class="progress mb-4"> 
-                                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                                                      </div>
-                                                    </div>
-                                                    <button type="button" class="btn btn-success btn-s"
-                                                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                        
-                                        
-                                                      <span class="fa fa-upload"></span> Upload
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning btn-s"
-                                                            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                                                      <span class="fa fa-ban"></span> Cancel
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-s"
-                                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                                      <span class="fa fa-trash"></span> Remove
-                                                    </button>
-                                                  </div>
-                                              
-                                                </div>
-                                            </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                </mat-tab>
-                                <mat-tab label="Second"> Content 2 </mat-tab>
-                                <mat-tab label="Third"> Content 3 </mat-tab>
-                        </mat-tab-group>
-                </div>
-    </div>
-    
-    <div [hidden]="pantalla==2" class="row" >
-            <div class="col-sm-12">   
-        <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <mat-chip>One fish</mat-chip>
+
+      <div class="fields-container">
+        <mat-form-field class="example-half-width">
+          <input matInput placeholder="Nombre del Producto o Servicio">
         </mat-form-field>
-        
-        <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
-        
-            <ng-container matColumnDef="Nombre">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-            </ng-container>
-        
-            
-            <ng-container matColumnDef="Codcli">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Codcli </th>
-                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-            </ng-container>
-        
-         
-            <ng-container matColumnDef="DOI">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> DOI </th>
-                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+
+      </div>
+
+      <mat-form-field class="example-half-width">
+        <mat-label>Seleccione una Area</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="fields-container">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Descripcion del Producto o Servicio">
+        </mat-form-field>
+
+      </div>
+
+
+
+      <div>
+        <button color="primary" mat-raised-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Identificacion</ng-template>
+
+      <mat-chip>En esta etapa la CMAC PIURA SAC debera identificar los riesgos de LAFT inherentes al desarrollo de sus
+        actividades de intermiadiacion financiera, teniendo en cuenta los Factores de Riesgo : Clientes , Productos y/o
+        Servicios
+        y Zona Geografica.
+      </mat-chip>
+
+
+
+      <mat-tab-group  style="width: 100%; margin-top: 4%">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">perm_identity</mat-icon>
+            CLIENTES
+          </ng-template>
+
+
+          <mat-table #table [dataSource]="dataSource">
+
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="checked">
+              <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+              </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="Perfil">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Perfil </th>
-                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                    
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
-        
- 
-            <ng-container matColumnDef="Info">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Info </th>
-                <td mat-cell *matCellDef="let row" [style.color]="row.color"> 
-                        <button (click)="getPersona()" type="button" class="btn btn-primary disabled"> + </button>
-                </td>
-                
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="descripcionCarateristica">
+              <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
             </ng-container>
-        
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-            </table>
-        
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="descripcionIdentificacion">
+              <mat-header-cell *matHeaderCellDef> Identificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionIdentificacion}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="impacto">
+              <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="calificacion">
+              <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="probabilidad">
+              <mat-header-cell *matHeaderCellDef> Probabilidad </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectClientes(row)"
+              (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+          </mat-table>
+
+
+          
+
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">work_outline</mat-icon>
+            PRODUCTOS Y/O SERVICIOS
+          </ng-template>
+
+          <mat-table #table [dataSource]="dataSourceProductos">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="checked">
+              <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="descripcionCarateristica">
+              <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="descripcionIdentificacion">
+              <mat-header-cell *matHeaderCellDef> Identificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionIdentificacion}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="impacto">
+              <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="calificacion">
+              <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="probabilidad">
+              <mat-header-cell *matHeaderCellDef> Probabilidad </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectProductos(row)"
+              (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+          </mat-table>
+
+
+
+
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">language</mat-icon>
+            ZONA GEOGRAFICA
+          </ng-template>
+
+
+          <mat-table #table [dataSource]="dataSourceZona">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="checked">
+              <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="descripcionCarateristica">
+              <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="descripcionIdentificacion">
+              <mat-header-cell *matHeaderCellDef> Identificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.descripcionIdentificacion}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="impacto">
+              <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="calificacion">
+              <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
+              <mat-cell *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip>  </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="probabilidad">
+              <mat-header-cell *matHeaderCellDef> Probabilidad </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectZona(row)"
+              (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+          </mat-table>
+
+        </mat-tab>
+
+
+      </mat-tab-group>
+      <div style="margin-right: 0%;">
+          <button style="margin-right: 0.5%;" color="primary" mat-raised-button matStepperPrevious>Atras</button>
+          <button color="primary" mat-raised-button matStepperNext>Siguiente</button>
         </div>
+
+
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Evaluacion /Control</ng-template>
+
+    <mat-chip>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
+      procedimientos
+      establecidos que ayuden a mitigar el riesgo de LAFT y de ser necesario , tomar las medidas para modificarlas
+      y/o implementar nuevos controles en caso de ausencia de estos o que los actuales sean debiles o no se esten
+      aplicando
+    </mat-chip>
+
+    <div style=" margin-top: 4%"  [hidden]="pantallaControl" >
+      <mat-form-field>
+        <mat-label>PROBABILIDAD</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option>None</mat-option>
+          <mat-option value="option1">Muy Alta</mat-option>
+          <mat-option value="option2">Alta</mat-option>
+          <mat-option value="option3">Media</mat-option>
+          <mat-option value="option3">Baja</mat-option>
+          <mat-option value="option3">Muy Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>IMPACTO</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option>None</mat-option>
+          <mat-option value="option1">Muy Alta</mat-option>
+          <mat-option value="option2">Alta</mat-option>
+          <mat-option value="option3">Media</mat-option>
+          <mat-option value="option3">Baja</mat-option>
+          <mat-option value="option3">Muy Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>RIESGO INHERENTE</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option>None</mat-option>
+          <mat-option value="option1">Muy Alta</mat-option>
+          <mat-option value="option2">Alta</mat-option>
+          <mat-option value="option3">Media</mat-option>
+          <mat-option value="option3">Baja</mat-option>
+          <mat-option value="option3">Muy Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>RIESGO RESIDUAL</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option>None</mat-option>
+          <mat-option value="option1">Muy Alta</mat-option>
+          <mat-option value="option2">Alta</mat-option>
+          <mat-option value="option3">Media</mat-option>
+          <mat-option value="option3">Baja</mat-option>
+          <mat-option value="option3">Muy Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-card  >
+        <mat-card-content >
+          <h2 class="example-h2">Alta</h2>
+
+          <mat-progress-spinner  class="example-margin" [color]="color" [mode]="mode" [value]="value">
+          </mat-progress-spinner>
+        </mat-card-content>
+      </mat-card>
+
+
     </div>
-</div>
-</div>  
 
--->
-<span  [suiTransition]="transitionController">
-<h2 class="ui header">
-    <i class="settings icon"></i>
-    <div class="content">
-      Account Settings
-      <div class="sub header">Manage your preferences</div>
+
+
+
+
+    <mat-chip>A partir del proceso de identificacion , la CMAC PIURA SAC , procedera a determinar su perfil a exposicion
+      al riesgo inherente de LAFT con base a la posibilidad o probabilidad de ocurrencia e impacto de riesgo inherente
+      de LAFT respecto a cada uno de los factores de riesgo identificados y su clasificacion.El resultado de estas
+      mediciones
+      sera cualitativo
+    </mat-chip>
+
+
+
+    <table style=" width: 100%;" mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Riesgo Inherente </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Riesgo Residual </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="button">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button (click)="evaluar()"  style=" margin-right: 4%" mat-raised-button color="primary">Evaluar</button>
+          <button mat-raised-button color="primary">X</button>
+
+
+        </td>
+
+      </ng-container>
+
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+    </table>
+
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
-  </h2>
 
-<table class="ui  selectable  celled padded table">
-    <thead>
-      <tr><th class="single line">Evidence Rating</th>
-      <th>Effect</th>
-      <th>Efficacy</th>
-      <th>Consensus</th>
-      <th>Comments</th>
-    </tr></thead>
-    <tbody>
-      <tr>
-        <td>
-          <h2 class="ui center aligned header">A</h2>
-        </td>
-        <td class="single line">
-          Power Output
-        </td>
-        <td>
-          <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-        </td>
-        <td class="right aligned">
-          80% <br>
-          <a href="#">18 studies</a>
-        </td>
-        <td>Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.</td>
-      </tr>
-      <tr>
-        <td>
-          <h2 class="ui center aligned header">A</h2>
-        </td>
-        <td class="single line">
-          Weight
-        </td>
-        <td>
-          <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-        </td>
-        <td class="right aligned">
-          100% <br>
-          <a href="#">65 studies</a>
-        </td>
-        <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr><th colspan="5">
-        <div class="ui right floated pagination menu">
-          <a class="icon item">
-            <i class="left chevron icon"></i>
-          </a>
-          <a class="item">1</a>
-          <a class="item">2</a>
-          <a class="item">3</a>
-          <a class="item">4</a>
-          <a class="icon item">
-            <i class="right chevron icon"></i>
-          </a>
-        </div>
-      </th>
-    </tr></tfoot>
-  </table>
-</span>
 
-<div class="ui grey three item inverted menu">
-    <a class="item active">
-      Home
-    </a>
-    <a class="item">
-      Messages
-    </a>
-    <a class="item">
-      Friends
-    </a>
-  </div>
-<!--
-<input #file type="file" multiple (change)="upload(file.files)" />
-<span *ngIf="uploadProgress > 0 && uploadProgress < 100">
-    {{uploadProgress}}%
-</span>
--->
 
+
+
+  </mat-step>
+</mat-horizontal-stepper>

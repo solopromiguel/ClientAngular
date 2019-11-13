@@ -22,8 +22,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
-
+import {MatStepperModule} from '@angular/material/stepper';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -67,7 +72,10 @@ export function tokenGetter() {
       HttpClientModule,
       BrowserAnimationsModule,
       MatTableModule,
+      MatProgressSpinnerModule,
+      MatStepperModule,
       MatBadgeModule,
+      MatCheckboxModule,
       MatInputModule,
       MatFormFieldModule,
       MatToolbarModule,
@@ -80,6 +88,7 @@ export function tokenGetter() {
       MatMenuModule,
       MatGridListModule,
       FormsModule,
+      MatChipsModule,
       MatTabsModule,
       RouterModule.forRoot(appRoutes),
       FileUploadModule,

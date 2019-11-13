@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~8.2.7",
     "@angular/router": "~8.2.7",
     "@auth0/angular-jwt": "^3.0.0",
+    "@sweetalert2/ngx-sweetalert2": "^7.0.1",
     "alertifyjs": "^1.11.4",
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
@@ -33,6 +34,8 @@
     "ng2-semantic-ui": "^0.9.7",
     "popper.js": "^1.15.0",
     "rxjs": "~6.4.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.3.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
