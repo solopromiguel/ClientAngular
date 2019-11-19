@@ -254,62 +254,75 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Evaluacion /Control</ng-template>
+    
 
-    <mat-chip>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
-      procedimientos
-      establecidos que ayuden a mitigar el riesgo de LAFT y de ser necesario , tomar las medidas para modificarlas
-      y/o implementar nuevos controles en caso de ausencia de estos o que los actuales sean debiles o no se esten
-      aplicando
-    </mat-chip>
+    <div style=" margin-top: 2%"  [hidden]="pantallaControl" >
 
-    <div style=" margin-top: 4%"  [hidden]="pantallaControl" >
-      <mat-form-field>
-        <mat-label>PROBABILIDAD</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Muy Alta</mat-option>
-          <mat-option value="option2">Alta</mat-option>
-          <mat-option value="option3">Media</mat-option>
-          <mat-option value="option3">Baja</mat-option>
-          <mat-option value="option3">Muy Baja</mat-option>
-        </mat-select>
-      </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>IMPACTO</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Muy Alta</mat-option>
-          <mat-option value="option2">Alta</mat-option>
-          <mat-option value="option3">Media</mat-option>
-          <mat-option value="option3">Baja</mat-option>
-          <mat-option value="option3">Muy Baja</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div style="margin-right: 0%;">
+        <button style="margin-right: 0.5%;" color="primary" (click)="pantallaControl=!pantallaControl" mat-raised-button >VOLVER</button>
+        <button color="primary" mat-raised-button matStepperNext>GUARDAR</button>
+      </div>
+      
+      <mat-chip>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
+        procedimientos
+        establecidos que ayuden a mitigar el riesgo de LAFT y de ser necesario , tomar las medidas para modificarlas
+        y/o implementar nuevos controles en caso de ausencia de estos o que los actuales sean debiles o no se esten
+        aplicando
+      </mat-chip>
+     
+      <div>
+        <mat-form-field>
+          <mat-label>PROBABILIDAD</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Muy Alta</mat-option>
+            <mat-option value="option2">Alta</mat-option>
+            <mat-option value="option3">Media</mat-option>
+            <mat-option value="option3">Baja</mat-option>
+            <mat-option value="option3">Muy Baja</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>IMPACTO</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Muy Alta</mat-option>
+            <mat-option value="option2">Alta</mat-option>
+            <mat-option value="option3">Media</mat-option>
+            <mat-option value="option3">Baja</mat-option>
+            <mat-option value="option3">Muy Baja</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>RIESGO INHERENTE</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Muy Alta</mat-option>
+            <mat-option value="option2">Alta</mat-option>
+            <mat-option value="option3">Media</mat-option>
+            <mat-option value="option3">Baja</mat-option>
+            <mat-option value="option3">Muy Baja</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>RIESGO RESIDUAL</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Muy Alta</mat-option>
+            <mat-option value="option2">Alta</mat-option>
+            <mat-option value="option3">Media</mat-option>
+            <mat-option value="option3">Baja</mat-option>
+            <mat-option value="option3">Muy Baja</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>RIESGO INHERENTE</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Muy Alta</mat-option>
-          <mat-option value="option2">Alta</mat-option>
-          <mat-option value="option3">Media</mat-option>
-          <mat-option value="option3">Baja</mat-option>
-          <mat-option value="option3">Muy Baja</mat-option>
-        </mat-select>
-      </mat-form-field>
+      </div>
+      
 
-      <mat-form-field>
-        <mat-label>RIESGO RESIDUAL</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Muy Alta</mat-option>
-          <mat-option value="option2">Alta</mat-option>
-          <mat-option value="option3">Media</mat-option>
-          <mat-option value="option3">Baja</mat-option>
-          <mat-option value="option3">Muy Baja</mat-option>
-        </mat-select>
-      </mat-form-field>
 
       <mat-card  >
         <mat-card-content >
@@ -323,46 +336,37 @@
 
     </div>
 
+    <div style=" margin-top: 4%"  [hidden]="!pantallaControl" >
 
-
-
-
-    <mat-chip>A partir del proceso de identificacion , la CMAC PIURA SAC , procedera a determinar su perfil a exposicion
+     <mat-chip>A partir del proceso de identificacion , la CMAC PIURA SAC , procedera a determinar su perfil a exposicion
       al riesgo inherente de LAFT con base a la posibilidad o probabilidad de ocurrencia e impacto de riesgo inherente
       de LAFT respecto a cada uno de los factores de riesgo identificados y su clasificacion.El resultado de estas
       mediciones
       sera cualitativo
     </mat-chip>
 
-
-
     <table style=" width: 100%;" mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="descripcion">
         <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
       </ng-container>
 
       <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
+      <ng-container matColumnDef="riesgoinherente">
         <th mat-header-cell *matHeaderCellDef> Riesgo Inherente </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.riesgoinherente}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
+      <ng-container matColumnDef="riesgoresidual">
         <th mat-header-cell *matHeaderCellDef> Riesgo Residual </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.riesgoresidual}} </td>
       </ng-container>
 
 
@@ -372,28 +376,21 @@
         <td mat-cell *matCellDef="let element">
           <button (click)="evaluar()"  style=" margin-right: 4%" mat-raised-button color="primary">Evaluar</button>
           <button mat-raised-button color="primary">X</button>
-
-
         </td>
 
       </ng-container>
-
-
-
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
     </table>
 
 
+    </div>
+
+  
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
-
-
-
-
-
   </mat-step>
 </mat-horizontal-stepper>

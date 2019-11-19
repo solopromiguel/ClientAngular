@@ -8,6 +8,8 @@ import {BehaviorSubject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class AuthService {
 
   numberAlerta = new BehaviorSubject<number>(1);
@@ -37,7 +39,7 @@ constructor(public http: HttpClient) { }
  login(model: any) {
   const headers = new HttpHeaders({'Content-type': 'application/json'});
   const options = { headers};
-  console.log('Alertas'+ this.numberAlerta.subscribe());
+  console.log('Alertas');
 
   return this.http.post(this.baseUrl + 'auth/login', model)
   .pipe(

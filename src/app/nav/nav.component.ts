@@ -27,17 +27,13 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
-
-    console.log('AQUI FOTO');
-
     this.consultaAlertas();
     this.pollData();
   }
 
 
   consultaAlertas() {
-  
-  this.alertas+=1;
+  this.alertas += 1;
   }
   
   collapse() {
@@ -80,7 +76,7 @@ export class NavComponent implements OnInit {
     this.polling = setInterval(() => {
     this.consultaAlertas();
 
-  }, 40*1000)
-}
+  },40*1000)
+  }
 
 }
