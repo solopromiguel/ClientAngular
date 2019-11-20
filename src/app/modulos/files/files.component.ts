@@ -10,43 +10,11 @@ import { TransitionService } from '../../_service/transition.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 
-export interface EtapaIdentificacion {
-  area: string;
-  descripcion: string;
-  nombre: string;
-  riesgos?: Riesgo[];
-}
-export interface Riesgo {
-  calificacion?: string;
-  descripcion: string;
-  impacto?: string;
-  probabilidad?: string;
-  riesgoinherente?: string;
-  riesgoresidual?: string;
-  caracteristicaid?: number;
-  controles?: ControlRiesgo[];
-
-  highlighted?: boolean;
-  hovered?: boolean;
-}
-export interface ControlRiesgo {
-  calificacion: string;
-  cargo: string;
-  formalizacion: string;
-  grado: string;
-  oportunidad: string;
-  periodicidad: string;
-  descripcion: string;
-
-  controlid: number;
-
-  highlighted?: boolean;
-  hovered?: boolean;
-}
+import {ControlRiesgo, EtapaIdentificacion, Riesgo} from '../../models/index';
 
 // Modelos
 
-export interface Identificacion {
+export class Identificacion {
   calificacion: string;
   descripcion: string;
   impacto: string;
@@ -59,7 +27,7 @@ export interface Identificacion {
 
 }
 
-export interface Control {
+export class Control {
   id: number;
   calificacion: string;
   cargo: string;
@@ -113,15 +81,12 @@ export class FilesComponent implements OnInit {
   dataClientes: Identificacion[] = [];
   riesgos: any[] = [];
   // DATA SOURCE
-
-
-
   dataSource = this.dataClientes;
   dataSourceProductos = this.dataClientes;
   dataSourceZona = this.dataClientes;
 
 
-  dataSource1?: MatTableDataSource <Riesgo[]>;
+  dataSource1: MatTableDataSource <Riesgo[]>;
 
   // dataSource1 = this.riesgos;
 
@@ -148,7 +113,6 @@ export class FilesComponent implements OnInit {
 
   baseUrl = environment.apiUrl;
   public transitionController = new TransitionController();
-  
 
   highlight(element: Identificacion) {
     element.highlighted = !element.highlighted;
