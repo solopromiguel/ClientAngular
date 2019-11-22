@@ -25,4 +25,10 @@ export class DatingService {
   getCaracteristicasPorFactor(IdFactor: number): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl + 'Caracteristicas/GetCaracteristicaPorFactor/' + IdFactor);
   }
+
+  getListControls(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + 'Controls/GetListControls');
+  }
+
+  
 }

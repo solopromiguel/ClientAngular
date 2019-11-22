@@ -1,6 +1,6 @@
 import { Riesgo } from './Riesgo';
 
-export class EtapaIdentificacion {
+export interface EtapaIdentificacion {
     area: string;
     descripcion: string;
     nombre: string;

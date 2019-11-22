@@ -1,6 +1,7 @@
 import { ControlRiesgo } from './ControlRiesgo';
 
-export class Riesgo {
+export interface Riesgo {
+   id :number;
     calificacion?: string;
     descripcion: string;
     impacto?: string;

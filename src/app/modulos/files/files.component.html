@@ -2,8 +2,8 @@
   {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
 </button>
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
+  <mat-step  >
+    <form >
       <ng-template matStepLabel>Definicion</ng-template>
 
       <mat-chip>One fish</mat-chip>
@@ -38,8 +38,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
+  <mat-step>
+    <form >
       <ng-template matStepLabel>Identificacion</ng-template>
 
       <mat-chip>En esta etapa la CMAC PIURA SAC debera identificar los riesgos de LAFT inherentes al desarrollo de sus
@@ -47,8 +47,26 @@
         Servicios
         y Zona Geografica.
       </mat-chip>
+<!--
+      <mat-form-field>
+        <mat-label>Select an option</mat-label>
+        <mat-select [(value)]="selected1">
+        
+            <mat-option *ngFor="let identificacion of identificaciones" [value]="identificacion"  >
+                {{identificacion.descripcionIdentificacion}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>You selected: {{selected1.descripcionIdentificacion}}</p>      
 
-
+      <mat-form-field style="width: 80%;">
+        <mat-select [(ngModel)]="addModel" placeholder=" list"  >
+          <mat-option *ngFor="let identificacion of identificaciones" [value]="identificacion"  >
+            {{identificacion.descripcionIdentificacion}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+-->
+      <button mat-raised-button (click)="addModel()" style="margin: 10px">Agregar</button>
 
       <mat-tab-group  style="width: 100%; margin-top: 4%">
         <mat-tab>
@@ -67,7 +85,7 @@
             <ng-container matColumnDef="checked">
               <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="element.checked"(click)="selectClientes(element) "></mat-checkbox>
               </mat-cell>
             </ng-container>
 
@@ -107,7 +125,7 @@
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"
-              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectClientes(row)"
+              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" 
               (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
           </mat-table>
 
@@ -122,38 +140,35 @@
             PRODUCTOS Y/O SERVICIOS
           </ng-template>
 
+
           <mat-table #table [dataSource]="dataSourceProductos">
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- Position Column -->
             <ng-container matColumnDef="checked">
               <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="element.checked" (click)="selectProductos(element)"></mat-checkbox>
               </mat-cell>
             </ng-container>
 
-            <!-- Position Column -->
+
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
 
-            <!-- Name Column -->
+
             <ng-container matColumnDef="descripcionCarateristica">
               <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
             </ng-container>
 
-            <!-- Weight Column -->
+
             <ng-container matColumnDef="descripcionIdentificacion">
               <mat-header-cell *matHeaderCellDef> Identificacion </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.descripcionIdentificacion}} </mat-cell>
             </ng-container>
 
-            <!-- Symbol Column -->
+
             <ng-container matColumnDef="impacto">
               <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
@@ -171,7 +186,7 @@
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"
-              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectProductos(row)"
+              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" 
               (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
           </mat-table>
 
@@ -186,13 +201,10 @@
             ZONA GEOGRAFICA
           </ng-template>
 
-
+  <!--
           <mat-table #table [dataSource]="dataSourceZona">
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
 
-            <!-- Position Column -->
             <ng-container matColumnDef="checked">
               <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
               <mat-cell *matCellDef="let element">
@@ -200,25 +212,25 @@
               </mat-cell>
             </ng-container>
 
-            <!-- Position Column -->
+
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
 
-            <!-- Name Column -->
+
             <ng-container matColumnDef="descripcionCarateristica">
               <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
             </ng-container>
 
-            <!-- Weight Column -->
+
             <ng-container matColumnDef="descripcionIdentificacion">
               <mat-header-cell *matHeaderCellDef> Identificacion </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.descripcionIdentificacion}} </mat-cell>
             </ng-container>
 
-            <!-- Symbol Column -->
+
             <ng-container matColumnDef="impacto">
               <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
@@ -239,7 +251,7 @@
               [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="selectZona(row)"
               (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
           </mat-table>
-
+        -->
         </mat-tab>
 
 
@@ -333,6 +345,51 @@
         </mat-card-content>
       </mat-card>
 
+      <mat-table #table [dataSource]="dataSourceControls">
+
+          <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="checked">
+            <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-checkbox [(ngModel)]="element.checked"(click)="SelectControl(element) "></mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="cargo">
+            <mat-header-cell *matHeaderCellDef> Cargo </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cargo}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="calificacion">
+            <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.calificacion}} </mat-cell>
+          </ng-container>
+
+          
+
+          <mat-header-row *matHeaderRowDef="displayedColumnsControls"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumnsControls;"
+            [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" 
+            (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+        </mat-table>
+
 
     </div>
 
@@ -374,7 +431,7 @@
       <ng-container matColumnDef="button">
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element">
-          <button (click)="evaluar()"  style=" margin-right: 4%" mat-raised-button color="primary">Evaluar</button>
+          <button (click)="evaluar(element)"  style=" margin-right: 4%" mat-raised-button color="primary">Evaluar</button>
           <button mat-raised-button color="primary">X</button>
         </td>
 

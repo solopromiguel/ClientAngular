@@ -26,6 +26,13 @@ export class Identificacion {
   hovered?: boolean;
 
 }
+export class IdentificacionDto{
+  Calificacion: string;
+  descripcionCarateristica: string;
+  descripcionIdentificacion?: string;
+  Impacto: string;
+
+}
 
 export class Control {
   id: number;
@@ -46,6 +53,8 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+
+
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -72,22 +81,30 @@ export class FilesComponent implements OnInit {
              ,private _formBuilder: FormBuilder, private _datingService: DatingService) {
 
   }
-
+  controlesAll :ControlRiesgo[];
+  ActualRiesgoSeleccionado:Riesgo;
+  selected1 ? = IdentificacionDto;
+  identificaciones: IdentificacionDto[] = [];
+  selectedTrainer: EtapaIdentificacion;
+  modelAdd = IdentificacionDto;
   // COLUMS TABLE
   displayedColumns = ['checked', 'id', 'descripcionCarateristica',
     'descripcionIdentificacion', 'impacto', 'probabilidad', 'calificacion'];
   displayedColumns1 = ['descripcion', 'riesgoinherente', 'riesgoresidual', 'button'];
+  displayedColumnsControls = [ 'checked','id', 'descripcion',  'cargo' ,'calificacion',];
+
   // MODELS
   dataClientes: Identificacion[] = [];
-  riesgos: any[] = [];
+  dataControles: ControlRiesgo[]=[];
+  riesgos: Riesgo[] = [];
   // DATA SOURCE
   dataSource = this.dataClientes;
   dataSourceProductos = this.dataClientes;
   dataSourceZona = this.dataClientes;
+  dataSourceControls = this.dataControles;
 
 
-  dataSource1: MatTableDataSource <Riesgo[]>;
-
+  dataSource1: MatTableDataSource<Riesgo[]> =  new  MatTableDataSource ();
   // dataSource1 = this.riesgos;
 
   // LIST CHECK
@@ -119,45 +136,79 @@ export class FilesComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.getCaracteristicasPorFactor(1); // IdFactor
     this.getCaracteristicasPorFactor(6);
     this.getCaracteristicasPorFactor(7);
+    
+    this.getControls();
 
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
 
     this.animate();
   }
-  evaluar() {
+  evaluar(row: any) {
     this.pantallaControl = false;
+    this.ActualRiesgoSeleccionado = row;
+    // this.getControls();
+
+  let controlesAdd : ControlRiesgo[] = [];
+    for (var i = 0; i < this.riesgos.length; i++) {
+      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {
+         for (var j = 0; j < this.controlesAll.length; j++) {
+          for (var z = 0; z < this.riesgos[i].controles.length; z++) {
+            if(this.controlesAll[j].id==this.riesgos[i].controles[j].id) {
+              let obj: ControlRiesgo;
+              obj=this.controlesAll[j];
+              obj.highlighted=true;
+              controlesAdd.push(obj);
+              console.log("entro");
+          } else {
+            controlesAdd.push(this.controlesAll[j]);
+          }
+          }
+             
+
+
+         }
+         this.dataSourceControls.data=controlesAdd;
+
+       // this.dataSourceControls.data=this.riesgos[i].controles;
+
+       
+      }
+     }
+
+
+  }
+  getControls(){
+    this._datingService.getListControls().subscribe(data => {
+    console.log(data);
+    this.controlesAll=data;
+    // return data;
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+    });
+
   }
 
   getCaracteristicasPorFactor(IdFactor: number) {
     this._datingService.getCaracteristicasPorFactor(IdFactor).subscribe(data => {
-      // this.alertify.success('Bienvenido');
-      // this.data2 = data;
+
       if (IdFactor == 1) {
         this.dataClientes = data;
         this.dataSource = this.dataClientes;
-        console.log(this.dataClientes);
+        this.identificaciones = data;
       }
       if (IdFactor == 6) {
         this.dataSourceProductos = data;
-        console.log(this.dataSourceProductos);
       }
-
+      /*
       if (IdFactor == 7) {
         this.dataSourceZona = data;
-        console.log(this.dataSourceZona);
+
       }
 
-
+    */
     }, error => {
       this.alertify.error(error);
     }, () => {
@@ -165,8 +216,15 @@ export class FilesComponent implements OnInit {
     });
   }
 
+  addModel() {
+    // console.log(this.modelAdd);
+   // const riesgo: Riesgo = {descripcion: ''};
+
+    // this.selectedTrainer.riesgos.push(riesgo);
+    // this.selectedTrainer.riesgos.push(this.pokemonToAdd)
+    // this.dsPokemons.data = this.selectedTrainer.pokemons;
+  }
   public animate(transitionName: string = 'fade right') {
-    console.log("entro");
     this.transitionController.animate(
       new Transition(transitionName, 500, TransitionDirection.In, () => console.log('Completed transition.')));
   }
@@ -175,23 +233,26 @@ export class FilesComponent implements OnInit {
     row.highlighted = !row.highlighted;
     if (row.highlighted) {
       this.checkListClientes.push(row.id);
-      console.log("entro 1");
       this.addRiesgo(row);
     } else {
+      this.deleteRiesgo(row.id)
       for (var i = 0; i < this.checkListClientes.length; i++) {
         if (this.checkListClientes[i] == row.id) {
           this.checkListClientes.splice(i, 1);
         }
       }
+
     }
-    //  console.log(this.checkListClientes);
+    console.log(this.checkListClientes);
+
   }
   selectProductos(row: any) {
     row.highlighted = !row.highlighted;
     if (row.highlighted) {
       this.checkListProductos.push(row.id);
-       this.addRiesgo(row);
+      this.addRiesgo(row);
     } else {
+      this.deleteRiesgo(row.id)
       for (var i = 0; i < this.checkListProductos.length; i++) {
         if (this.checkListProductos[i] == row.id) {
           this.checkListProductos.splice(i, 1);
@@ -215,17 +276,48 @@ export class FilesComponent implements OnInit {
   }
 
   addRiesgo(model: any) {
-    const test: Riesgo[] = [{ descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '' }];
-
-
-    const data = this.dataSource1.data;
-    data.push(test);
-   // this.dataSource1.data = data;
-
+    const test: Riesgo = { id: model.id, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '', controles:[] };
      this.riesgos.push(test);
-    // this.dataSource1.data.push(test);
-    //this.dataSource1.data = model;
-    console.log(this.dataSource1);
+     this.dataSource1.data=this.riesgos;
+  }
+  deleteRiesgo(id : any) {
+    
+    for (var i = 0; i <this.riesgos.length; i++) {
+    
+      if (this.riesgos[i].id == id) {
+        this.riesgos.splice(i, 1);
+        console.log("encontro");
+      }
+    }
+    this.dataSource1.data=this.riesgos;
+  }
+
+  SelectControl(row: any) {
+   row.highlighted = !row.highlighted;
+   if (row.highlighted) { 
+     for (var i = 0; i < this.riesgos.length; i++) {
+      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {
+        this.riesgos[i].controles.push(row);
+      }
+    }
+    
+  } else {
+    console.log('deleted');
+    
+    for (var i = 0; i < this.riesgos.length; i++) {
+      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {         
+         for (var j = 0; j < this.riesgos[i].controles.length; j++) {
+            if(this.riesgos[i].controles[j].id == row.id){
+              this.riesgos[i].controles.splice(j, 1);
+            }
+         }
+       
+      }
+  }
+
+  }
+  console.log( this.riesgos);
+
   }
 
   deletedEvaluacion() {

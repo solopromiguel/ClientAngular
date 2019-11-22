@@ -1,4 +1,5 @@
-export class ControlRiesgo {
+export interface ControlRiesgo {
+    id: number;
     calificacion: string;
     cargo: string;
     formalizacion: string;
@@ -10,3 +11,5 @@ export class ControlRiesgo {
     highlighted?: boolean;
     hovered?: boolean;
 }
+
+
