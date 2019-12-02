@@ -1,6 +1,7 @@
 <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
   {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
 </button>
+<button (click)="generar()"> generar</button>
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step  >
     <form >

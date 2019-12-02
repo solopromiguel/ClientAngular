@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { TestService } from '../../_service/test.service';
 import { DatingService } from '../../_service/dating.service';
+import { DocxtemplaterService } from '../../_service/docxtemplater.service';
 
 
 import { TransitionController, Transition, TransitionDirection } from 'ng2-semantic-ui';
@@ -78,7 +79,7 @@ export class FilesComponent implements OnInit {
 
   constructor(public http: HttpClient, private alertify: TestService, private transition: TransitionService
              // tslint:disable-next-line: variable-name
-             ,private _formBuilder: FormBuilder, private _datingService: DatingService) {
+             ,private _formBuilder: FormBuilder, private _datingService: DatingService, private _doct: DocxtemplaterService) {
 
   }
   controlesAll :ControlRiesgo[];
@@ -95,13 +96,13 @@ export class FilesComponent implements OnInit {
 
   // MODELS
   dataClientes: Identificacion[] = [];
-  dataControles: ControlRiesgo[]=[];
+  dataControles: ControlRiesgo[] = [];
   riesgos: Riesgo[] = [];
   // DATA SOURCE
   dataSource = this.dataClientes;
   dataSourceProductos = this.dataClientes;
   dataSourceZona = this.dataClientes;
-  dataSourceControls = this.dataControles;
+  dataSourceControls : MatTableDataSource<ControlRiesgo[]> =  new  MatTableDataSource ();
 
 
   dataSource1: MatTableDataSource<Riesgo[]> =  new  MatTableDataSource ();
@@ -145,44 +146,72 @@ export class FilesComponent implements OnInit {
 
     this.animate();
   }
+  generar(){
+  console.log(this.riesgos);
+   const Riesgos:Riesgo[]= this.riesgos;
+
+    const model = {
+    area:'Area',
+    descripcion:'descripcion',
+    nombre: 'nombre',
+    Riesgos
+    }
+  console.log(model);
+    this._datingService.GuardarEvaluacion(model).subscribe(data => {
+      
+      
+       }, error => {
+          
+       }, () => {
+      console.log();
+       });
+
+
+
+  // this._doct.loadFileGeneration('','');
+   //this._doctOf.generate();
+  }
   evaluar(row: any) {
     this.pantallaControl = false;
     this.ActualRiesgoSeleccionado = row;
-    // this.getControls();
+   // this.getControls();
+  for (let j = 0; j < this.dataSourceControls.data.length; j++) {
+    this.dataSourceControls.data[j]['checked']=false;
+  }
 
-  let controlesAdd : ControlRiesgo[] = [];
     for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {
-         for (var j = 0; j < this.controlesAll.length; j++) {
-          for (var z = 0; z < this.riesgos[i].controles.length; z++) {
-            if(this.controlesAll[j].id==this.riesgos[i].controles[j].id) {
-              let obj: ControlRiesgo;
-              obj=this.controlesAll[j];
-              obj.highlighted=true;
-              controlesAdd.push(obj);
-              console.log("entro");
-          } else {
-            controlesAdd.push(this.controlesAll[j]);
+      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {
+        if(this.riesgos[i].controles.length==0){
+           console.log("vacio")
+          return ;
+        }else {
+          for (var j = 0; j < this.dataSourceControls.data.length; j++) {
+           
+            for (var z = 0; z < this.riesgos[i].controles.length; z++) {
+              
+                  if(this.riesgos[i].controles[z].id==this.dataSourceControls.data[j]['id']){
+                    this.dataSourceControls.data[j]['checked']=true;
+                    console.log("encontro");
+  
+                  } else {
+                    console.log("no");
+                   // this.dataSourceControls.data[j]['checked']=false;
+                    
+                  }
+                }
           }
-          }
-             
 
+        }
 
-         }
-         this.dataSourceControls.data=controlesAdd;
-
-       // this.dataSourceControls.data=this.riesgos[i].controles;
-
-       
       }
      }
-
-
+      console.log(this.dataSourceControls.data);
   }
   getControls(){
     this._datingService.getListControls().subscribe(data => {
     console.log(data);
     this.controlesAll=data;
+    this.dataSourceControls.data=data;
     // return data;
     }, error => {
       this.alertify.error(error);
@@ -276,7 +305,7 @@ export class FilesComponent implements OnInit {
   }
 
   addRiesgo(model: any) {
-    const test: Riesgo = { id: model.id, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '', controles:[] };
+     const test: Riesgo = { id:model.caracteristicaId, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '',caracteristicaid:model.id, controles:[] };
      this.riesgos.push(test);
      this.dataSource1.data=this.riesgos;
   }
@@ -293,10 +322,13 @@ export class FilesComponent implements OnInit {
   }
 
   SelectControl(row: any) {
-   row.highlighted = !row.highlighted;
-   if (row.highlighted) { 
+    console.log(row);
+
+   // row.checked = !row.checked;
+   if (!row.checked) { 
+    console.log('agregar');
      for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {
+      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {
         this.riesgos[i].controles.push(row);
       }
     }

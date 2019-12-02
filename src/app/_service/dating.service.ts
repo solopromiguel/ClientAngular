@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { EtapaIdentificacion } from '../models';
 
 export interface Identificacion {
   calificacion: string;
@@ -28,6 +29,10 @@ export class DatingService {
 
   getListControls(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl + 'Controls/GetListControls');
+  }
+
+  GuardarEvaluacion(model : EtapaIdentificacion): Observable<any[]> {
+    return this.http.post<any[]>(this.baseUrl + 'Evaluacion/GuardarEvaluacion', model);
   }
 
   
