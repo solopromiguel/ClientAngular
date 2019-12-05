@@ -286,50 +286,49 @@
      
       <div>
         <mat-form-field>
+
           <mat-label>PROBABILIDAD</mat-label>
-          <mat-select [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="Probabilidad">
             <mat-option>None</mat-option>
-            <mat-option value="option1">Muy Alta</mat-option>
-            <mat-option value="option2">Alta</mat-option>
-            <mat-option value="option3">Media</mat-option>
-            <mat-option value="option3">Baja</mat-option>
-            <mat-option value="option3">Muy Baja</mat-option>
+            <mat-option value="MUY ALTA">MUY ALTA</mat-option>
+            <mat-option value="ALTA">ALTA</mat-option>
+            <mat-option value="MEDIA">MEDIA</mat-option>
+            <mat-option value=">BAJA">BAJA</mat-option>
+            <mat-option value="MUY BAJA">MUY BAJA</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
           <mat-label>IMPACTO</mat-label>
-          <mat-select [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="Impacto">
             <mat-option>None</mat-option>
-            <mat-option value="option1">Muy Alta</mat-option>
-            <mat-option value="option2">Alta</mat-option>
-            <mat-option value="option3">Media</mat-option>
-            <mat-option value="option3">Baja</mat-option>
-            <mat-option value="option3">Muy Baja</mat-option>
+            <mat-option value="MUY ALTA">MUY ALTA</mat-option>
+            <mat-option value="ALTA">ALTA</mat-option>
+            <mat-option value="MEDIA">MEDIA</mat-option>
+            <mat-option value=">BAJA">BAJA</mat-option>
+            <mat-option value="MUY BAJA">MUY BAJA</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
           <mat-label>RIESGO INHERENTE</mat-label>
-          <mat-select [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="selected">
             <mat-option>None</mat-option>
-            <mat-option value="option1">Muy Alta</mat-option>
-            <mat-option value="option2">Alta</mat-option>
-            <mat-option value="option3">Media</mat-option>
-            <mat-option value="option3">Baja</mat-option>
-            <mat-option value="option3">Muy Baja</mat-option>
+            <mat-option value="EXTREMO">EXTREMO</mat-option>
+            <mat-option value="ALTO">ALTO</mat-option>
+            <mat-option value="MODERADO">MODERADO</mat-option>
+            <mat-option value="BAJO">BAJO</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
           <mat-label>RIESGO RESIDUAL</mat-label>
-          <mat-select [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="selected">
             <mat-option>None</mat-option>
-            <mat-option value="option1">Muy Alta</mat-option>
-            <mat-option value="option2">Alta</mat-option>
-            <mat-option value="option3">Media</mat-option>
-            <mat-option value="option3">Baja</mat-option>
-            <mat-option value="option3">Muy Baja</mat-option>
+            <mat-option value="EXTREMO">EXTREMO</mat-option>
+            <mat-option value="ALTO">ALTO</mat-option>
+            <mat-option value="MODERADO">MODERADO</mat-option>
+            <mat-option value="BAJO">BAJO</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -416,15 +415,15 @@
       </ng-container>
 
       <!-- Weight Column -->
-      <ng-container matColumnDef="riesgoinherente">
-        <th mat-header-cell *matHeaderCellDef> Riesgo Inherente </th>
-        <td mat-cell *matCellDef="let element"> {{element.riesgoinherente}} </td>
+      <ng-container matColumnDef="probabilidad">
+        <th mat-header-cell *matHeaderCellDef> Probabilidad </th>
+        <td mat-cell *matCellDef="let element"> {{element.probabilidad}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="riesgoresidual">
-        <th mat-header-cell *matHeaderCellDef> Riesgo Residual </th>
-        <td mat-cell *matCellDef="let element"> {{element.riesgoresidual}} </td>
+      <ng-container matColumnDef="impacto">
+        <th mat-header-cell *matHeaderCellDef> Impacto </th>
+        <td mat-cell *matCellDef="let element"> {{element.impacto}} </td>
       </ng-container>
 
 

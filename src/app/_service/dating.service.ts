@@ -35,5 +35,12 @@ export class DatingService {
     return this.http.post<any[]>(this.baseUrl + 'Evaluacion/GuardarEvaluacion', model);
   }
 
+  ExportDoc(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'files/ExportDoc');
+  }
+
+
+
+
   
 }

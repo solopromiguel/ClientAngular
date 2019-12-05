@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TestService } from '../../_service/test.service';
 import { DatingService } from '../../_service/dating.service';
 import { DocxtemplaterService } from '../../_service/docxtemplater.service';
-
+import { saveAs } from 'file-saver';
 
 import { TransitionController, Transition, TransitionDirection } from 'ng2-semantic-ui';
 import { TransitionService } from '../../_service/transition.service';
@@ -91,7 +91,7 @@ export class FilesComponent implements OnInit {
   // COLUMS TABLE
   displayedColumns = ['checked', 'id', 'descripcionCarateristica',
     'descripcionIdentificacion', 'impacto', 'probabilidad', 'calificacion'];
-  displayedColumns1 = ['descripcion', 'riesgoinherente', 'riesgoresidual', 'button'];
+  displayedColumns1 = ['descripcion', 'probabilidad', 'impacto', 'button'];
   displayedColumnsControls = [ 'checked','id', 'descripcion',  'cargo' ,'calificacion',];
 
   // MODELS
@@ -99,7 +99,7 @@ export class FilesComponent implements OnInit {
   dataControles: ControlRiesgo[] = [];
   riesgos: Riesgo[] = [];
   // DATA SOURCE
-  dataSource = this.dataClientes;
+  dataSource =  this.dataClientes;
   dataSourceProductos = this.dataClientes;
   dataSourceZona = this.dataClientes;
   dataSourceControls : MatTableDataSource<ControlRiesgo[]> =  new  MatTableDataSource ();
@@ -115,6 +115,10 @@ export class FilesComponent implements OnInit {
 
   // VARIABLES
   selected = 'option2';
+
+  Probabilidad = '';
+  Impacto = '';
+
   color = 'primary';
   mode = 'determinate';
   value = 80;
@@ -146,7 +150,7 @@ export class FilesComponent implements OnInit {
 
     this.animate();
   }
-  generar(){
+  generar() {
   console.log(this.riesgos);
    const Riesgos:Riesgo[]= this.riesgos;
 
@@ -171,13 +175,38 @@ export class FilesComponent implements OnInit {
   // this._doct.loadFileGeneration('','');
    //this._doctOf.generate();
   }
+
+  download(){
+    this._datingService.ExportDoc().subscribe(data => {
+
+          console.log(data);
+          var binaryString = window.atob(data.result);
+          var binaryLen = binaryString.length;
+          var bytes = new Uint8Array(binaryLen);
+          for (var i = 0; i < binaryLen; i++) {
+            var ascii = binaryString.charCodeAt(i);
+            bytes[i] = ascii;
+          }
+          var blob = new Blob([bytes], {type: "application/docx;base64"});
+          var fileName = "documento.docx";
+          saveAs(blob, fileName);
+    }, error => {
+      console.log(error);
+    }, () => {
+    //  console.log();
+    });
+
+
+  }
   evaluar(row: any) {
+    
     this.pantallaControl = false;
     this.ActualRiesgoSeleccionado = row;
+    this.setProbabilidadAndImpacto();
    // this.getControls();
-  for (let j = 0; j < this.dataSourceControls.data.length; j++) {
-    this.dataSourceControls.data[j]['checked']=false;
-  }
+    for (let j = 0; j < this.dataSourceControls.data.length; j++) {
+      this.dataSourceControls.data[j]['checked']=false;
+    }
 
     for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {
@@ -205,9 +234,10 @@ export class FilesComponent implements OnInit {
 
       }
      }
+     console.log('Aqui abajo esta');
       console.log(this.dataSourceControls.data);
   }
-  getControls(){
+  getControls() {
     this._datingService.getListControls().subscribe(data => {
     console.log(data);
     this.controlesAll=data;
@@ -222,7 +252,6 @@ export class FilesComponent implements OnInit {
 
   getCaracteristicasPorFactor(IdFactor: number) {
     this._datingService.getCaracteristicasPorFactor(IdFactor).subscribe(data => {
-
       if (IdFactor == 1) {
         this.dataClientes = data;
         this.dataSource = this.dataClientes;
@@ -236,7 +265,6 @@ export class FilesComponent implements OnInit {
         this.dataSourceZona = data;
 
       }
-
     */
     }, error => {
       this.alertify.error(error);
@@ -259,21 +287,26 @@ export class FilesComponent implements OnInit {
   }
 
   selectClientes(row: any) {
+     
+    if(row.checked){
+     console.log("check");
+    }else{
+      console.log(row);
+      console.log("no check");
+    }
     row.highlighted = !row.highlighted;
     if (row.highlighted) {
       this.checkListClientes.push(row.id);
       this.addRiesgo(row);
-    } else {
+      } else {
       this.deleteRiesgo(row.id)
       for (var i = 0; i < this.checkListClientes.length; i++) {
         if (this.checkListClientes[i] == row.id) {
           this.checkListClientes.splice(i, 1);
         }
       }
-
     }
     console.log(this.checkListClientes);
-
   }
   selectProductos(row: any) {
     row.highlighted = !row.highlighted;
@@ -305,7 +338,7 @@ export class FilesComponent implements OnInit {
   }
 
   addRiesgo(model: any) {
-     const test: Riesgo = { id:model.caracteristicaId, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '',caracteristicaid:model.id, controles:[] };
+     const test: Riesgo = { id:model.caracteristicaId, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '',probabilidad:model.probabilidad,impacto:model.impacto,caracteristicaid:model.id, controles:[] };
      this.riesgos.push(test);
      this.dataSource1.data=this.riesgos;
   }
@@ -337,7 +370,7 @@ export class FilesComponent implements OnInit {
     console.log('deleted');
     
     for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].id == this.ActualRiesgoSeleccionado.id) {         
+      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {         
          for (var j = 0; j < this.riesgos[i].controles.length; j++) {
             if(this.riesgos[i].controles[j].id == row.id){
               this.riesgos[i].controles.splice(j, 1);
@@ -348,12 +381,26 @@ export class FilesComponent implements OnInit {
   }
 
   }
-  console.log( this.riesgos);
+  console.log(this.riesgos);
 
   }
 
   deletedEvaluacion() {
   }
+
+  setProbabilidadAndImpacto() {
+    console.log(this.ActualRiesgoSeleccionado);
+    this.Probabilidad=this.ActualRiesgoSeleccionado.probabilidad;
+    this.Impacto=this.ActualRiesgoSeleccionado.impacto;
+  }
+
+  calcularInherenteAndResidual(addControlId) {
+   
+
+
+  }
+
+  
 
 
 }
