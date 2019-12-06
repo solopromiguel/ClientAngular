@@ -8,7 +8,8 @@ export interface Riesgo {
     probabilidad?: string;
     riesgoinherente?: string;
     riesgoresidual?: string;
-    caracteristicaid?: number;
+    identificacionid?: number;
+
     controles?: ControlRiesgo[];
   
     highlighted?: boolean;

@@ -1,7 +1,7 @@
 <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
   {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
 </button>
-<button (click)="generar()"> generar</button>
+
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step  >
     <form >
@@ -11,7 +11,7 @@
 
       <div class="fields-container">
         <mat-form-field class="example-half-width">
-          <input matInput placeholder="Nombre del Producto o Servicio">
+          <input matInput [(ngModel)]="modelEtapa.nombre"   placeholder="Nombre del Producto o Servicio">
         </mat-form-field>
 
       </div>
@@ -31,12 +31,17 @@
         </mat-form-field>
 
       </div>
+      
+      <div class="fields-container">
 
+          <button (click)="generar()" mat-raised-button color="primary"> generar</button>
+      </div>
 
 
       <div>
-        <button color="primary" mat-raised-button matStepperNext>Siguiente</button>
+       <!-- <button color="primary" mat-raised-button matStepperNext>Siguiente</button>-->
       </div>
+      
     </form>
   </mat-step>
   <mat-step>

@@ -82,6 +82,7 @@ export class FilesComponent implements OnInit {
              ,private _formBuilder: FormBuilder, private _datingService: DatingService, private _doct: DocxtemplaterService) {
 
   }
+  nameModel= '';
   controlesAll :ControlRiesgo[];
   ActualRiesgoSeleccionado:Riesgo;
   selected1 ? = IdentificacionDto;
@@ -126,6 +127,7 @@ export class FilesComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  modelEtapa: any = {};
   foods: any[] = [
     { value: 'CANALES ELECTRONICOS', viewValue: 'CANALES ELECTRONICOS' },
     { value: 'OPERACIONES', viewValue: 'OPERACIONES' },
@@ -151,21 +153,22 @@ export class FilesComponent implements OnInit {
     this.animate();
   }
   generar() {
-  console.log(this.riesgos);
-   const Riesgos:Riesgo[]= this.riesgos;
-
-    const model = {
-    area:'Area',
-    descripcion:'descripcion',
-    nombre: 'nombre',
+   console.log(this.riesgos);
+   const Riesgos: Riesgo[] = this.riesgos;
+   const nombre = this.modelEtapa.nombre;
+   
+   const model = {
+    area: 'Area',
+    descripcion: 'descripcion',
+    nombre,
     Riesgos
     }
-  console.log(model);
-    this._datingService.GuardarEvaluacion(model).subscribe(data => {
+   this._datingService.GuardarEvaluacion(model).subscribe(data => {
       
-      
+      this.download();
        }, error => {
-          
+        this.download();
+        console.log(error);
        }, () => {
       console.log();
        });
@@ -190,6 +193,8 @@ export class FilesComponent implements OnInit {
           var blob = new Blob([bytes], {type: "application/docx;base64"});
           var fileName = "documento.docx";
           saveAs(blob, fileName);
+
+
     }, error => {
       console.log(error);
     }, () => {
@@ -209,7 +214,7 @@ export class FilesComponent implements OnInit {
     }
 
     for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {
+      if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {
         if(this.riesgos[i].controles.length==0){
            console.log("vacio")
           return ;
@@ -338,7 +343,7 @@ export class FilesComponent implements OnInit {
   }
 
   addRiesgo(model: any) {
-     const test: Riesgo = { id:model.caracteristicaId, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '',probabilidad:model.probabilidad,impacto:model.impacto,caracteristicaid:model.id, controles:[] };
+     const test: Riesgo = { id:model.caracteristicaId, descripcion: model.descripcionIdentificacion, riesgoinherente: '', riesgoresidual: '',probabilidad:model.probabilidad,impacto:model.impacto,identificacionid:model.id, controles:[] };
      this.riesgos.push(test);
      this.dataSource1.data=this.riesgos;
   }
@@ -361,7 +366,7 @@ export class FilesComponent implements OnInit {
    if (!row.checked) { 
     console.log('agregar');
      for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {
+      if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {
         this.riesgos[i].controles.push(row);
       }
     }
@@ -370,7 +375,7 @@ export class FilesComponent implements OnInit {
     console.log('deleted');
     
     for (var i = 0; i < this.riesgos.length; i++) {
-      if (this.riesgos[i].caracteristicaid == this.ActualRiesgoSeleccionado.caracteristicaid) {         
+      if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {         
          for (var j = 0; j < this.riesgos[i].controles.length; j++) {
             if(this.riesgos[i].controles[j].id == row.id){
               this.riesgos[i].controles.splice(j, 1);
