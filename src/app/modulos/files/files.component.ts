@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 
 import {ControlRiesgo, EtapaIdentificacion, Riesgo} from '../../models/index';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 // Modelos
 
@@ -99,7 +100,7 @@ export class FilesComponent implements OnInit {
     ];
   nameModel= '';
   controlesAll :ControlRiesgo[];
-  ActualRiesgoSeleccionado:Riesgo;
+  ActualRiesgoSeleccionado?:Riesgo;
   selected1 ? = IdentificacionDto;
   identificaciones: IdentificacionDto[] = [];
   selectedTrainer: EtapaIdentificacion;
@@ -173,7 +174,7 @@ export class FilesComponent implements OnInit {
     this.animate();
   }
   generar() {
-   console.log(this.testMatriz());
+   console.log(this.cambioProbabilidadOrImpacto());
    const Riesgos: Riesgo[] = this.riesgos;
    const Nombre = this.modelEtapa.nombre;
    
@@ -274,13 +275,64 @@ export class FilesComponent implements OnInit {
 
     }
   }
+  calcularIdentidad3(model: string)
+  {
+    
+ switch(model) {
+   case "BAJO":
+            return "BAJO";
+    break;
+   case "MODERADO":
+             return "BAJO";
+    break;
+    case "ALTO":
+            return "MODERADO";
+    break;
+   case "EXTREMO":
+           return "ALTO";
+    break;
+   
+   default:
+            
+       break;
+
+ }
+ 
+ 
+} 
+
+calcularIdentidad4(model: string)
+{
+  
+switch(model) {
+ case "BAJO":
+          return "MODERADO";
+  break;
+ case "MODERADO":
+           return "ALTO";
+  break;
+  case "ALTO":
+          return "EXTREMO";
+  break;
+ case "EXTREMO":
+         return "EXTREMO";
+  break;
+ 
+ default:
+          
+     break;
+
+}
+
+
+}
 
   evaluar(row: any) {
     
     this.pantallaControl = false;
     this.ActualRiesgoSeleccionado = row;
     this.setProbabilidadAndImpacto();
-    this.testMatriz();
+    this.cambioProbabilidadOrImpacto();
    // this.getControls();
     for (let j = 0; j < this.dataSourceControls.data.length; j++) {
       this.dataSourceControls.data[j]['checked']=false;
@@ -365,7 +417,6 @@ export class FilesComponent implements OnInit {
   }
 
   selectClientes(row: any) {
-     
     if(row.checked){
      console.log("check");
     }else{
@@ -437,16 +488,18 @@ export class FilesComponent implements OnInit {
 
    // row.checked = !row.checked;
    if (!row.checked) { 
+   
     console.log('agregar');
+    this.calcularResidual(true)
      for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {
-        this.riesgos[i].controles.push(row);
+         this.riesgos[i].controles.push(row);
       }
     }
     
   } else {
     console.log('deleted');
-    
+    this.calcularResidual(false)
     for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {         
          for (var j = 0; j < this.riesgos[i].controles.length; j++) {
@@ -472,18 +525,32 @@ export class FilesComponent implements OnInit {
     this.Impacto=this.ActualRiesgoSeleccionado.impacto;
   }
 
-  calcularResidual(addControlId) {
-   if (this.RiesgoInherente === 'BAJO') {
-       this.RiesgoResidual = 'BAJO';
-       return;
+  calcularResidual(IsAdd:boolean) {
+   if (this.RiesgoResidual === '') {this.RiesgoResidual = this.RiesgoInherente}
+
+   if(IsAdd){
+    this.RiesgoResidual = this.calcularIdentidad3(this.RiesgoResidual);
    }
+   else this.RiesgoResidual = this.calcularIdentidad4(this.RiesgoResidual);
+   
+     
 
   }
 
-  testMatriz(){
-   console.log(this.matriz[this.calcularIdentidad(this.Probabilidad)][this.calcularIdentidad(this.Impacto)]);
+  cambioProbabilidadOrImpacto() {
+   
+   for (var i = 0; i < this.riesgos.length; i++) {
+    if (this.riesgos[i].identificacionid == this.ActualRiesgoSeleccionado.identificacionid) {   
+      this.riesgos[i].probabilidad=this.Probabilidad;
+      this.riesgos[i].impacto=this.Impacto;
+     }
+   }
    const valorMatriz = this.matriz[this.calcularIdentidad(this.Probabilidad)][this.calcularIdentidad(this.Impacto)];
    this.RiesgoInherente = this.calcularIdentidad2(valorMatriz);
+
+
+
+
   }
 
   

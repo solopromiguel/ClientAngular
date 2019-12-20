@@ -274,21 +274,22 @@
 
       <div style="margin-right: 0%;">
         <button style="margin-right: 0.5%;" color="primary" (click)="pantallaControl=!pantallaControl" mat-raised-button >VOLVER</button>
-        <button color="primary" mat-raised-button matStepperNext (click)="testMatriz()"  >GUARDAR</button>
+        <button color="primary" mat-raised-button matStepperNext (click)="cambioProbabilidadOrImpacto()"  >GUARDAR</button>
       </div>
       
-      <p>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
+    <!-- <p>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
         procedimientos
         establecidos que ayuden a mitigar el riesgo de LAFT y de ser necesario , tomar las medidas para modificarlas
         y/o implementar nuevos controles en caso de ausencia de estos o que los actuales sean debiles o no se esten
         aplicando
-      </p>
+      </p>-->   
+      <p>{{ActualRiesgoSeleccionado?.descripcion}}</p>
      
       <div>
         <mat-form-field>
 
           <mat-label>PROBABILIDAD</mat-label>
-          <mat-select  [(value)]="Probabilidad" (selectionChange)="testMatriz()">
+          <mat-select  [(value)]="Probabilidad" (selectionChange)="cambioProbabilidadOrImpacto()">
             <mat-option>None</mat-option>
             <mat-option value="MUY ALTA">MUY ALTA</mat-option>
             <mat-option value="ALTA">ALTA</mat-option>
@@ -300,7 +301,7 @@
   
         <mat-form-field>
           <mat-label>IMPACTO</mat-label>
-          <mat-select [(value)]="Impacto" (selectionChange)="testMatriz()">
+          <mat-select [(value)]="Impacto" (selectionChange)="cambioProbabilidadOrImpacto()">
             <mat-option>None</mat-option>
             <mat-option value="MUY ALTA">MUY ALTA</mat-option>
             <mat-option value="ALTA">ALTA</mat-option>
@@ -323,7 +324,7 @@
   
         <mat-form-field>
           <mat-label>RIESGO RESIDUAL</mat-label>
-          <mat-select [disabled]="true" [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="RiesgoResidual">
             <mat-option>None</mat-option>
             <mat-option value="EXTREMO">EXTREMO</mat-option>
             <mat-option value="ALTO">ALTO</mat-option>
