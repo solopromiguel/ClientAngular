@@ -11,14 +11,13 @@
 
       <div class="fields-container">
         <mat-form-field class="example-half-width">
-          <input matInput [(ngModel)]="modelEtapa.nombre"   placeholder="Nombre del Producto o Servicio">
+          <input matInput [(ngModel)]="modelEtapa.nombre"  name="nombre"   placeholder="Nombre del Producto o Servicio">
         </mat-form-field>
-
       </div>
 
       <mat-form-field class="example-half-width">
         <mat-label>Seleccione una Area</mat-label>
-        <mat-select>
+        <mat-select [(value)]="selectedArea">
           <mat-option *ngFor="let food of foods" [value]="food.value">
             {{food.viewValue}}
           </mat-option>
@@ -27,16 +26,12 @@
 
       <div class="fields-container">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Descripcion del Producto o Servicio">
+          <input matInput placeholder="Descripcion del Producto o Servicio" [(ngModel)]="modelEtapa.descripcion"  name="descripcion">
         </mat-form-field>
 
       </div>
       
-      <div class="fields-container">
-
-          <button (click)="generar()" mat-raised-button color="primary"> generar</button>
-      </div>
-
+          <button type="submit" (click)="generar()" mat-raised-button color="primary"> generar</button>
 
       <div>
        <!-- <button color="primary" mat-raised-button matStepperNext>Siguiente</button>-->
@@ -48,11 +43,11 @@
     <form >
       <ng-template matStepLabel>Identificacion</ng-template>
 
-      <mat-chip>En esta etapa la CMAC PIURA SAC debera identificar los riesgos de LAFT inherentes al desarrollo de sus
+      <p>En esta etapa la CMAC PIURA SAC debera identificar los riesgos de LAFT inherentes al desarrollo de sus
         actividades de intermiadiacion financiera, teniendo en cuenta los Factores de Riesgo : Clientes , Productos y/o
         Servicios
         y Zona Geografica.
-      </mat-chip>
+      </p>
 <!--
       <mat-form-field>
         <mat-label>Select an option</mat-label>
@@ -86,19 +81,20 @@
 
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
-
             <!-- Position Column -->
             <ng-container matColumnDef="checked">
               <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="element.checked"(click)="selectClientes(element) "></mat-checkbox>
+                <mat-checkbox [(ngModel)]="element.checked"  name="checked"  (click)="selectClientes(element) "></mat-checkbox>
               </mat-cell>
             </ng-container>
 
+            
+
             <!-- Position Column -->
             <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+              <mat-header-cell  [hidden]="true" *matHeaderCellDef> Id </mat-header-cell>
+              <mat-cell [hidden]="true" *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
 
             <!-- Name Column -->
@@ -115,18 +111,18 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="impacto">
-              <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
+              <mat-header-cell  [hidden]="true" *matHeaderCellDef > Impacto </mat-header-cell>
+              <mat-cell [hidden]="true"  *matCellDef="let element"> {{element.impacto}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="calificacion">
-              <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
-              <mat-cell *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip> </mat-cell>
+            <ng-container matColumnDef="calificacion" >
+              <mat-header-cell *matHeaderCellDef [hidden]="true" > Calificacion </mat-header-cell>
+              <mat-cell  [hidden]="true" *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="probabilidad">
-              <mat-header-cell *matHeaderCellDef> Probabilidad </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
+              <mat-header-cell  [hidden]="true" *matHeaderCellDef> Probabilidad </mat-header-cell>
+              <mat-cell [hidden]="true" *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -152,17 +148,16 @@
             <ng-container matColumnDef="checked">
               <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="element.checked" (click)="selectProductos(element)"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="element.checked"  name="checkedP" (click)="selectProductos(element)"></mat-checkbox>
               </mat-cell>
             </ng-container>
 
 
             <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+              <mat-header-cell [hidden]="true" *matHeaderCellDef> Id </mat-header-cell>
+              <mat-cell  [hidden]="true" *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
-
-
+            
             <ng-container matColumnDef="descripcionCarateristica">
               <mat-header-cell *matHeaderCellDef> Caracteristica </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.descripcionCarateristica}} </mat-cell>
@@ -176,18 +171,18 @@
 
 
             <ng-container matColumnDef="impacto">
-              <mat-header-cell *matHeaderCellDef> Impacto </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.impacto}} </mat-cell>
+              <mat-header-cell [hidden]="true" *matHeaderCellDef> Impacto </mat-header-cell>
+              <mat-cell [hidden]="true" *matCellDef="let element"> {{element.impacto}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="calificacion">
-              <mat-header-cell *matHeaderCellDef> Calificacion </mat-header-cell>
-              <mat-cell *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip></mat-cell>
+              <mat-header-cell [hidden]="true" *matHeaderCellDef> Calificacion </mat-header-cell>
+              <mat-cell  [hidden]="true" *matCellDef="let element">  <mat-chip>{{element.calificacion}}</mat-chip></mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="probabilidad">
-              <mat-header-cell *matHeaderCellDef> Probabilidad </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
+              <mat-header-cell [hidden]="true" *matHeaderCellDef> Probabilidad </mat-header-cell>
+              <mat-cell [hidden]="true" *matCellDef="let element"> {{element.probabilidad}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -279,21 +274,21 @@
 
       <div style="margin-right: 0%;">
         <button style="margin-right: 0.5%;" color="primary" (click)="pantallaControl=!pantallaControl" mat-raised-button >VOLVER</button>
-        <button color="primary" mat-raised-button matStepperNext>GUARDAR</button>
+        <button color="primary" mat-raised-button matStepperNext (click)="testMatriz()"  >GUARDAR</button>
       </div>
       
-      <mat-chip>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
+      <p>Se debera identificar y evaluar los controles actuales con los que cuenta la CMAC PIURA SAC , en sus
         procedimientos
         establecidos que ayuden a mitigar el riesgo de LAFT y de ser necesario , tomar las medidas para modificarlas
         y/o implementar nuevos controles en caso de ausencia de estos o que los actuales sean debiles o no se esten
         aplicando
-      </mat-chip>
+      </p>
      
       <div>
         <mat-form-field>
 
           <mat-label>PROBABILIDAD</mat-label>
-          <mat-select [disabled]="true" [(value)]="Probabilidad">
+          <mat-select  [(value)]="Probabilidad" (selectionChange)="testMatriz()">
             <mat-option>None</mat-option>
             <mat-option value="MUY ALTA">MUY ALTA</mat-option>
             <mat-option value="ALTA">ALTA</mat-option>
@@ -305,7 +300,7 @@
   
         <mat-form-field>
           <mat-label>IMPACTO</mat-label>
-          <mat-select [disabled]="true" [(value)]="Impacto">
+          <mat-select [(value)]="Impacto" (selectionChange)="testMatriz()">
             <mat-option>None</mat-option>
             <mat-option value="MUY ALTA">MUY ALTA</mat-option>
             <mat-option value="ALTA">ALTA</mat-option>
@@ -317,7 +312,7 @@
   
         <mat-form-field>
           <mat-label>RIESGO INHERENTE</mat-label>
-          <mat-select [disabled]="true" [(value)]="selected">
+          <mat-select [disabled]="true" [(value)]="RiesgoInherente">
             <mat-option>None</mat-option>
             <mat-option value="EXTREMO">EXTREMO</mat-option>
             <mat-option value="ALTO">ALTO</mat-option>
@@ -344,7 +339,6 @@
       <mat-card  >
         <mat-card-content >
           <h2 class="example-h2">Alta</h2>
-
           <mat-progress-spinner  class="example-margin" [color]="color" [mode]="mode" [value]="value">
           </mat-progress-spinner>
         </mat-card-content>
@@ -354,12 +348,11 @@
 
           <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
-
           <!-- Position Column -->
           <ng-container matColumnDef="checked">
             <mat-header-cell *matHeaderCellDef>Seleccion</mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <mat-checkbox [(ngModel)]="element.checked"(click)="SelectControl(element) "></mat-checkbox>
+              <mat-checkbox [(ngModel)]="element.checked"  name="subjectS" (click)="SelectControl(element) "></mat-checkbox>
             </mat-cell>
           </ng-container>
 
@@ -400,13 +393,13 @@
 
     <div style=" margin-top: 4%"  [hidden]="!pantallaControl" >
 
-     <mat-chip>A partir del proceso de identificacion , la CMAC PIURA SAC , procedera a determinar su perfil a exposicion
+     <p>A partir del proceso de identificacion , la CMAC PIURA SAC , procedera a determinar su perfil a exposicion
       al riesgo inherente de LAFT con base a la posibilidad o probabilidad de ocurrencia e impacto de riesgo inherente
       de LAFT respecto a cada uno de los factores de riesgo identificados y su clasificacion.El resultado de estas
       mediciones
       sera cualitativo
-    </mat-chip>
-
+    </p>
+     
     <table style=" width: 100%;" mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.

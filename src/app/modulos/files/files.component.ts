@@ -54,6 +54,13 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+export class Datos {
+  constructor(
+    public nombre: string,
+   
+){}
+ 
+}
 
 
 
@@ -79,9 +86,17 @@ export class FilesComponent implements OnInit {
 
   constructor(public http: HttpClient, private alertify: TestService, private transition: TransitionService
              // tslint:disable-next-line: variable-name
-             ,private _formBuilder: FormBuilder, private _datingService: DatingService, private _doct: DocxtemplaterService) {
+             , private _formBuilder: FormBuilder, private _datingService: DatingService, private _doct: DocxtemplaterService) {
 
   }
+
+  matriz = [
+    [3 , 3, 2, 2, 1],
+    [3 , 3, 2, 1, 0],
+    [3 , 2, 1, 1, 0],
+    [3 , 2, 1, 0, 0],
+    [2 , 1, 1, 0, 0]
+    ];
   nameModel= '';
   controlesAll :ControlRiesgo[];
   ActualRiesgoSeleccionado:Riesgo;
@@ -119,6 +134,8 @@ export class FilesComponent implements OnInit {
 
   Probabilidad = '';
   Impacto = '';
+  RiesgoInherente = '';
+  RiesgoResidual = '' ;
 
   color = 'primary';
   mode = 'determinate';
@@ -127,7 +144,10 @@ export class FilesComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  modelEtapa: any = {};
+
+  modelEtapa : any = {};
+  selectedArea:'';
+  
   foods: any[] = [
     { value: 'CANALES ELECTRONICOS', viewValue: 'CANALES ELECTRONICOS' },
     { value: 'OPERACIONES', viewValue: 'OPERACIONES' },
@@ -153,14 +173,14 @@ export class FilesComponent implements OnInit {
     this.animate();
   }
   generar() {
-   console.log(this.riesgos);
+   console.log(this.testMatriz());
    const Riesgos: Riesgo[] = this.riesgos;
-   const nombre = this.modelEtapa.nombre;
+   const Nombre = this.modelEtapa.nombre;
    
    const model = {
-    area: 'Area',
-    descripcion: 'descripcion',
-    nombre,
+    area: this.selectedArea,
+    descripcion: this.modelEtapa.descripcion,
+    Nombre,
     Riesgos
     }
    this._datingService.GuardarEvaluacion(model).subscribe(data => {
@@ -203,11 +223,64 @@ export class FilesComponent implements OnInit {
 
 
   }
+  calcularIdentidad(model: string) {
+
+    switch(model) {
+      case 'MUY ALTA': { 
+          return 0;
+          break; 
+      } 
+      case 'ALTA': { 
+        return 1;
+        break; 
+      }
+      case 'MEDIA': { 
+        return 2;
+        break; 
+      }
+      case 'BAJA': { 
+        return 3;
+        break; 
+      }
+      case 'MUY BAJA': { 
+        return 4;
+        break; 
+      }
+      default: { 
+        return 0;
+        break; 
+      } 
+   } 
+  }
+  calcularIdentidad2(val: number) {
+    
+    switch(val) {
+      case 0:
+               return "BAJO";
+       break;
+      case 1:
+                return "MODERADO";
+       break;
+       case 2:
+                return "ALTO";
+       break;
+      case 3:
+                return "EXTREMO";
+       break;
+      
+      default:
+               
+          break;
+
+    }
+  }
+
   evaluar(row: any) {
     
     this.pantallaControl = false;
     this.ActualRiesgoSeleccionado = row;
     this.setProbabilidadAndImpacto();
+    this.testMatriz();
    // this.getControls();
     for (let j = 0; j < this.dataSourceControls.data.length; j++) {
       this.dataSourceControls.data[j]['checked']=false;
@@ -399,10 +472,18 @@ export class FilesComponent implements OnInit {
     this.Impacto=this.ActualRiesgoSeleccionado.impacto;
   }
 
-  calcularInherenteAndResidual(addControlId) {
-   
+  calcularResidual(addControlId) {
+   if (this.RiesgoInherente === 'BAJO') {
+       this.RiesgoResidual = 'BAJO';
+       return;
+   }
 
+  }
 
+  testMatriz(){
+   console.log(this.matriz[this.calcularIdentidad(this.Probabilidad)][this.calcularIdentidad(this.Impacto)]);
+   const valorMatriz = this.matriz[this.calcularIdentidad(this.Probabilidad)][this.calcularIdentidad(this.Impacto)];
+   this.RiesgoInherente = this.calcularIdentidad2(valorMatriz);
   }
 
   

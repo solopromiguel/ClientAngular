@@ -3,6 +3,6 @@ import { Riesgo } from './Riesgo';
 export interface EtapaIdentificacion {
     area: string;
     descripcion: string;
-    nombre: string;
+    Nombre: string;
     riesgos?: Riesgo[];
   }

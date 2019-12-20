@@ -8,6 +8,7 @@ import { EtapaIdentificacion } from '../models';
 export interface Identificacion {
   calificacion: string;
   caracteristicaId: number;
+  Nombre:string;
   descripcion: string;
   id: number;
   impacto: string;
