@@ -8,7 +8,7 @@ import { EtapaIdentificacion } from '../models';
 export interface Identificacion {
   calificacion: string;
   caracteristicaId: number;
-  Nombre:string;
+  Nombre:string;  
   descripcion: string;
   id: number;
   impacto: string;
@@ -40,7 +40,11 @@ export class DatingService {
     return this.http.get<any>(this.baseUrl + 'files/ExportDoc');
   }
 
+  AddControl(model : any): Observable<any[]> {
+    return this.http.post<any[]>(this.baseUrl + 'Evaluacion/AddControl', model);
+  }
 
+  
 
 
   

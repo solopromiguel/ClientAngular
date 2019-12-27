@@ -1,22 +1,22 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { TestService } from "../../_service/test.service";
-import { DatingService } from "../../_service/dating.service";
-import { DocxtemplaterService } from "../../_service/docxtemplater.service";
-import { saveAs } from "file-saver";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { TestService } from '../../_service/test.service';
+import { DatingService } from '../../_service/dating.service';
+import { DocxtemplaterService } from '../../_service/docxtemplater.service';
+import { saveAs } from 'file-saver';
 
 import {
   TransitionController,
   Transition,
   TransitionDirection
-} from "ng2-semantic-ui";
-import { TransitionService } from "../../_service/transition.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatTableDataSource } from "@angular/material/table";
+} from 'ng2-semantic-ui';
+import { TransitionService } from '../../_service/transition.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 
-import { ControlRiesgo, EtapaIdentificacion, Riesgo } from "../../models/index";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { ControlRiesgo, EtapaIdentificacion, Riesgo } from '../../models/index';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 // Modelos
 
@@ -62,22 +62,22 @@ export class Datos {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: "Hydrogen", weight: 1.0079, symbol: "H" },
-  { position: 2, name: "Helium", weight: 4.0026, symbol: "He" },
-  { position: 3, name: "Lithium", weight: 6.941, symbol: "Li" },
-  { position: 4, name: "Beryllium", weight: 9.0122, symbol: "Be" },
-  { position: 5, name: "Boron", weight: 10.811, symbol: "B" },
-  { position: 6, name: "Carbon", weight: 12.0107, symbol: "C" },
-  { position: 7, name: "Nitrogen", weight: 14.0067, symbol: "N" },
-  { position: 8, name: "Oxygen", weight: 15.9994, symbol: "O" },
-  { position: 9, name: "Fluorine", weight: 18.9984, symbol: "F" },
-  { position: 10, name: "Neon", weight: 20.1797, symbol: "Ne" }
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
 ];
 
 @Component({
-  selector: "app-files",
-  templateUrl: "./files.component.html",
-  styleUrls: ["./files.component.css"]
+  selector: 'app-files',
+  templateUrl: './files.component.html',
+  styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
   constructor(
@@ -97,7 +97,7 @@ export class FilesComponent implements OnInit {
     [3, 2, 1, 0, 0],
     [2, 1, 1, 0, 0]
   ];
-  nameModel = "";
+  nameModel = '';
   controlesAll: ControlRiesgo[];
   ActualRiesgoSeleccionado?: Riesgo;
   selected1?= IdentificacionDto;
@@ -106,21 +106,21 @@ export class FilesComponent implements OnInit {
   modelAdd = IdentificacionDto;
   // COLUMS TABLE
   displayedColumns = [
-    "checked",
-    "id",
-    "descripcionCarateristica",
-    "descripcionIdentificacion",
-    "impacto",
-    "probabilidad",
-    "calificacion"
+    'checked',
+    'id',
+    'descripcionCarateristica',
+    'descripcionIdentificacion',
+    'impacto',
+    'probabilidad',
+    'calificacion'
   ];
-  displayedColumns1 = ["descripcion", "probabilidad", "impacto", "button"];
+  displayedColumns1 = ['descripcion', 'probabilidad', 'impacto', 'button'];
   displayedColumnsControls = [
-    "checked",
-    "id",
-    "descripcion",
-    "cargo",
-    "calificacion"
+    'checked',
+    'id',
+    'descripcion',
+    'cargo',
+    'calificacion'
   ];
 
   // MODELS
@@ -144,15 +144,15 @@ export class FilesComponent implements OnInit {
   checkListZona: Identificacion[] = [];
 
   // VARIABLES
-  selected = "option2";
+  selected = 'option2';
 
-  Probabilidad = "";
-  Impacto = "";
-  RiesgoInherente = "";
-  RiesgoResidual = "";
+  Probabilidad = '';
+  Impacto = '';
+  RiesgoInherente = '';
+  RiesgoResidual = '';
 
-  color = "primary";
-  mode = "determinate";
+  color = 'primary';
+  mode = 'determinate';
   value = 80;
   pantallaControl = true;
   isLinear = false;
@@ -160,13 +160,13 @@ export class FilesComponent implements OnInit {
   secondFormGroup: FormGroup;
 
   modelEtapa: any = {};
-  selectedArea: "";
+  selectedArea: '';
 
   foods: any[] = [
-    { value: "CANALES ELECTRONICOS", viewValue: "CANALES ELECTRONICOS" },
-    { value: "OPERACIONES", viewValue: "OPERACIONES" },
-    { value: "CREDITOS", viewValue: "CREDITOS" },
-    { value: "OTROS", viewValue: "OTROS" }
+    { value: 'CANALES ELECTRONICOS', viewValue: 'CANALES ELECTRONICOS' },
+    { value: 'OPERACIONES', viewValue: 'OPERACIONES' },
+    { value: 'CREDITOS', viewValue: 'CREDITOS' },
+    { value: 'OTROS', viewValue: 'OTROS' }
   ];
 
   baseUrl = environment.apiUrl;
@@ -224,8 +224,8 @@ export class FilesComponent implements OnInit {
           var ascii = binaryString.charCodeAt(i);
           bytes[i] = ascii;
         }
-        var blob = new Blob([bytes], { type: "application/docx;base64" });
-        var fileName = "documento.docx";
+        var blob = new Blob([bytes], { type: 'application/docx;base64' });
+        var fileName = 'documento.docx';
         saveAs(blob, fileName);
       },
       error => {
@@ -238,23 +238,23 @@ export class FilesComponent implements OnInit {
   }
   calcularIdentidad(model: string) {
     switch (model) {
-      case "MUY ALTA": {
+      case 'MUY ALTA': {
         return 0;
         break;
       }
-      case "ALTA": {
+      case 'ALTA': {
         return 1;
         break;
       }
-      case "MEDIA": {
+      case 'MEDIA': {
         return 2;
         break;
       }
-      case "BAJA": {
+      case 'BAJA': {
         return 3;
         break;
       }
-      case "MUY BAJA": {
+      case 'MUY BAJA': {
         return 4;
         break;
       }
@@ -267,16 +267,16 @@ export class FilesComponent implements OnInit {
   calcularIdentidad2(val: number) {
     switch (val) {
       case 0:
-        return "BAJO";
+        return 'BAJO';
         break;
       case 1:
-        return "MODERADO";
+        return 'MODERADO';
         break;
       case 2:
-        return "ALTO";
+        return 'ALTO';
         break;
       case 3:
-        return "EXTREMO";
+        return 'EXTREMO';
         break;
 
       default:
@@ -285,17 +285,17 @@ export class FilesComponent implements OnInit {
   }
   calcularIdentidad3(model: string) {
     switch (model) {
-      case "BAJO":
-        return "BAJO";
+      case 'BAJO':
+        return 'BAJO';
         break;
-      case "MODERADO":
-        return "BAJO";
+      case 'MODERADO':
+        return 'BAJO';
         break;
-      case "ALTO":
-        return "MODERADO";
+      case 'ALTO':
+        return 'MODERADO';
         break;
-      case "EXTREMO":
-        return "ALTO";
+      case 'EXTREMO':
+        return 'ALTO';
         break;
 
       default:
@@ -305,17 +305,17 @@ export class FilesComponent implements OnInit {
 
   calcularIdentidad4(model: string) {
     switch (model) {
-      case "BAJO":
-        return "MODERADO";
+      case 'BAJO':
+        return 'MODERADO';
         break;
-      case "MODERADO":
-        return "ALTO";
+      case 'MODERADO':
+        return 'ALTO';
         break;
-      case "ALTO":
-        return "EXTREMO";
+      case 'ALTO':
+        return 'EXTREMO';
         break;
-      case "EXTREMO":
-        return "EXTREMO";
+      case 'EXTREMO':
+        return 'EXTREMO';
         break;
 
       default:
@@ -331,7 +331,7 @@ export class FilesComponent implements OnInit {
     console.log(this.RiesgoInherente);
     this.setRiesgoResidualInicial();
     for (let j = 0; j < this.dataSourceControls.data.length; j++) {
-      this.dataSourceControls.data[j]["checked"] = false;
+      this.dataSourceControls.data[j]['checked'] = false;
     }
 
     for (var i = 0; i < this.riesgos.length; i++) {
@@ -340,17 +340,17 @@ export class FilesComponent implements OnInit {
         this.ActualRiesgoSeleccionado.identificacionid
       ) {
         if (this.riesgos[i].controles.length == 0) {
-          console.log("vacio");
+          console.log('vacio');
           return;
         } else {
           for (var j = 0; j < this.dataSourceControls.data.length; j++) {
             for (var z = 0; z < this.riesgos[i].controles.length; z++) {
-              if (this.riesgos[i].controles[z].id ==this.dataSourceControls.data[j]["id"]) {
+              if (this.riesgos[i].controles[z].id ==this.dataSourceControls.data[j]['id']) {
                
-                this.dataSourceControls.data[j]["checked"] = true;
-                console.log("encontro");
+                this.dataSourceControls.data[j]['checked'] = true;
+                console.log('encontro');
               } else {
-                console.log("no");
+                console.log('no');
                 // this.dataSourceControls.data[j]['checked']=false;
               }
             }
@@ -409,20 +409,20 @@ export class FilesComponent implements OnInit {
     // this.selectedTrainer.riesgos.push(this.pokemonToAdd)
     // this.dsPokemons.data = this.selectedTrainer.pokemons;
   }
-  public animate(transitionName: string = "fade right") {
+  public animate(transitionName: string = 'fade right') {
     this.transitionController.animate(
       new Transition(transitionName, 500, TransitionDirection.In, () =>
-        console.log("Completed transition.")
+        console.log('Completed transition.')
       )
     );
   }
 
   selectClientes(row: any) {
     if (row.checked) {
-      console.log("check");
+      console.log('check');
     } else {
       console.log(row);
-      console.log("no check");
+      console.log('no check');
     }
     row.highlighted = !row.highlighted;
     if (row.highlighted) {
@@ -471,8 +471,8 @@ export class FilesComponent implements OnInit {
     const test: Riesgo = {
       id: model.caracteristicaId,
       descripcion: model.descripcionIdentificacion,
-      riesgoinherente: "",
-      riesgoresidual: "",
+      riesgoinherente: '',
+      riesgoresidual: '',
       probabilidad: model.probabilidad,
       impacto: model.impacto,
       identificacionid: model.id,
@@ -485,7 +485,7 @@ export class FilesComponent implements OnInit {
     for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].id == id) {
         this.riesgos.splice(i, 1);
-        console.log("encontro");
+        console.log('encontro');
       }
     }
     this.dataSource1.data = this.riesgos;
@@ -496,7 +496,7 @@ export class FilesComponent implements OnInit {
 
     // row.checked = !row.checked;
     if (!row.checked) {
-      console.log("agregar");
+      console.log('agregar');
       this.calcularResidual(true);
       for (var i = 0; i < this.riesgos.length; i++) {
         if (
@@ -507,7 +507,7 @@ export class FilesComponent implements OnInit {
         }
       }
     } else {
-      console.log("deleted");
+      console.log('deleted');
       this.calcularResidual(false);
       for (var i = 0; i < this.riesgos.length; i++) {
         if (
@@ -534,7 +534,7 @@ export class FilesComponent implements OnInit {
   }
 
   calcularResidual(IsAdd: boolean) {
-    if (this.RiesgoResidual === "") {
+    if (this.RiesgoResidual === '') {
       this.RiesgoResidual = this.RiesgoInherente;
     }
 
@@ -562,6 +562,15 @@ export class FilesComponent implements OnInit {
     }
   }
 
+/*
+  matriz = [
+    [3, 3, 2, 2, 1],
+    [3, 3, 2, 1, 0],
+    [3, 2, 1, 1, 0],
+    [3, 2, 1, 0, 0],
+    [2, 1, 1, 0, 0]
+  ];
+*/
   cambioProbabilidadOrImpacto() {
     for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].identificacionid ==this.ActualRiesgoSeleccionado.identificacionid) {
@@ -569,18 +578,21 @@ export class FilesComponent implements OnInit {
         this.riesgos[i].impacto = this.Impacto;
       }
     }
-    const valorMatriz = this.matriz[this.calcularIdentidad(this.Probabilidad)][
-      this.calcularIdentidad(this.Impacto)
-    ];
-    this.RiesgoInherente = this.calcularIdentidad2(valorMatriz);
+    console.log('***********************************************');
+    console.log('Probabilidad = ' + this.Probabilidad);
+    console.log('Impacto = ' + this.Impacto);
+    const valorMatriz = this.matriz[this.calcularIdentidad(this.Probabilidad.replace('>', ''))][this.calcularIdentidad(this.Impacto.replace('>', ''))];
 
+    console.log('Valor Matriz= ' + valorMatriz);
+    this.RiesgoInherente = this.calcularIdentidad2(valorMatriz);
+    this.setRiesgoResidualInicial();
   }
 
-  setRiesgoResidualInicial(){
-
+  setRiesgoResidualInicial() {
+ 
     for (var i = 0; i < this.riesgos.length; i++) {
       if (this.riesgos[i].identificacionid ==this.ActualRiesgoSeleccionado.identificacionid) {
-        debugger
+  
         if (this.riesgos[i].controles.length == 0) {
           this.RiesgoResidual = this.RiesgoInherente;
         }else

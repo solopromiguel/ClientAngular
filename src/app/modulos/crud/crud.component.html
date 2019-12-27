@@ -1,0 +1,168 @@
+<mat-tab-group>
+    <mat-tab label="CONTROLES"> 
+
+        <form >
+      
+            <div class="fields-container">
+              <mat-form-field class="example-half-width">
+                <input matInput   name="nombre"   placeholder="Nombre del Control">
+              </mat-form-field>
+            </div>
+      
+            <mat-form-field class="example-half-width">
+              <mat-label>Cargo del Responsable</mat-label>
+              <mat-select [(value)]="selectedCargo">
+                <mat-option *ngFor="let food of cargos" [value]="food.value">
+                  {{food.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-half-width">
+                <mat-label>Peridiocidad</mat-label>
+                <mat-select [(value)]="selectedPeriodicidad">
+                  <mat-option *ngFor="let food of periodicidads" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width">
+                <mat-label>Oportunidad</mat-label>
+                <mat-select [(value)]="selectedOportunidad">
+                  <mat-option *ngFor="let food of oportunidades" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width">
+                <mat-label>Grado de Automatizacion</mat-label>
+                <mat-select [(value)]="selectedGrado">
+                  <mat-option *ngFor="let food of grados" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width">
+                <mat-label>Formalizacion</mat-label>
+                <mat-select [(value)]="selectedFormalizacion">
+                  <mat-option *ngFor="let food of formalizaciones" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+
+               <div>
+                <button type="submit" (click)="guardarControl()"  mat-raised-button color="primary"> GUARDAR</button>
+               </div>
+               
+      
+            <div>
+             <!-- <button color="primary" mat-raised-button matStepperNext>Siguiente</button>-->
+            </div>
+            
+          </form>
+
+    </mat-tab>
+    <mat-tab label="CARACTERISTICA">
+        
+        <form >
+      
+            <div class="fields-container">
+              <mat-form-field class="example-half-width">
+                <input matInput   name="nombre"   placeholder="Nombre de Caracteristica">
+              </mat-form-field>
+            </div>
+      
+
+              <mat-form-field class="example-half-width">
+                <mat-label>FACTOR</mat-label>
+                <mat-select [(value)]="selectedFormalizacion">
+                  <mat-option *ngFor="let food of factores" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+
+               <div>
+                <button type="submit"  mat-raised-button color="primary"> GUARDAR</button>
+               </div>
+               
+      
+            <div>
+             <!-- <button color="primary" mat-raised-button matStepperNext>Siguiente</button>-->
+            </div>
+            
+          </form>
+    
+    
+    
+    
+    </mat-tab>
+    <mat-tab label="IDENTIFICACIONES">
+        <form >
+      
+            <div class="fields-container">
+              <mat-form-field class="example-half-width">
+                <input matInput   name="nombre"   placeholder="Nombre de Caracteristica">
+              </mat-form-field>
+            </div>
+      
+
+              <mat-form-field class="example-full-width">
+                <mat-label>FACTOR</mat-label>
+                <mat-select [(value)]="selectedFormalizacion">
+                  <mat-option *ngFor="let food of factores" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width">
+                <mat-label>PROBABILIDAD</mat-label>
+                <mat-select [(value)]="selectedFormalizacion">
+                  <mat-option *ngFor="let food of factores" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="fields-container">
+                <mat-form-field class="example-half-width">
+                  <input matInput   name="nombre"   placeholder="Referencia de la Probabilidad">
+                </mat-form-field>
+              </div>
+
+              <mat-form-field class="example-half-width">
+                <mat-label>IMPACTO</mat-label>
+                <mat-select [(value)]="selectedFormalizacion">
+                  <mat-option *ngFor="let food of factores" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="fields-container">
+                <mat-form-field class="example-half-width">
+                  <input matInput   name="nombre"   placeholder="Referencia del Impacto">
+                </mat-form-field>
+              </div>
+      
+
+               <div>
+                <button type="submit"  mat-raised-button color="primary"> GUARDAR</button>
+               </div>
+               
+      
+            <div>
+             <!-- <button color="primary" mat-raised-button matStepperNext>Siguiente</button>-->
+            </div>
+            
+          </form>
+    
+    </mat-tab>
+  </mat-tab-group>

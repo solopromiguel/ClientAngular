@@ -49,6 +49,7 @@ import { MemberDetailComponent } from './modulos/members/member-detail/member-de
 import { MemberEditComponent } from './modulos/members/member-edit/member-edit.component';
 import {SuiModule} from 'ng2-semantic-ui';
 import { FooterComponent } from './common/footer/footer.component';
+import { CRUDComponent } from './modulos/crud/crud.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -65,6 +66,7 @@ export function tokenGetter() {
       MemberDetailComponent,
       MemberEditComponent,
       FooterComponent,
+      CRUDComponent,
    ],
    imports: [
       BrowserModule,
